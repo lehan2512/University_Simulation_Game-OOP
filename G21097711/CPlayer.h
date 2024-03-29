@@ -1,32 +1,29 @@
-#pragma once
 #include <string>
 #include <memory>
-
-
-using namespace std;
+#include <vector>
 
 class CPlayer
 {
 private:
-	string mName;
-	int mMotivation;
-	int mSuccess;
-	int mYear;
-	int mPosition;
+    std::string mName;
+    int mMotivation;
+    int mSuccess;
+    int mYear;
+    int mPosition;
 
 public:
-	CPlayer(string name);
-	void setName(string name);
-	void setMotivation(int motivation);
-	void setSuccess(unsigned int success);
-	void setYear(int year);
-	void setPosition(int position);
-	string getName();
-	int getMotivation();
-	int getSuccess();
-	int getYear();
-	int getPosition();
+    CPlayer(std::string name);
+    void setName(std::string name);
+    void setMotivation(int motivation);
+    void setSuccess(unsigned int success);
+    void setYear(int year);
+    void setPosition(int position);
+    std::string getName();
+    int getMotivation();
+    int getSuccess();
+    int getYear();
+    int getPosition();
 };
 
 // Define an alias for the shared pointer
-using CPlayerPtr = shared_ptr<CPlayer>;
+using CPlayerPtr = std::shared_ptr<CPlayer>;

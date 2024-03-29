@@ -1,8 +1,8 @@
 #include "CPlayer.h"
 
-CPlayer::CPlayer(string name) : mName(name), mMotivation(1000), mSuccess(0), mYear(1), mPosition(0) {}
+CPlayer::CPlayer(std::string name) : mName(name), mMotivation(1000), mSuccess(0), mYear(1), mPosition(0) {}
 
-void CPlayer::setName(string name) {
+void CPlayer::setName(std::string name) {
     mName = name;
 }
 
@@ -22,7 +22,7 @@ void CPlayer::setPosition(int position) {
     mPosition = position;
 }
 
-string CPlayer::getName() {
+std::string CPlayer::getName() {
     return mName;
 }
 

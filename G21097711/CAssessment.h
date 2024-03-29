@@ -6,12 +6,12 @@ class CAssessment :
     public CSpace
 {
 private:
-    int mMotivation();
-    int mSuccess();
-    int mYear();
+    int mMotivation;
+    int mSuccess;
+    int mYear;
 
 public:
-    CAssessment(int motivation, string outputMessage, int success, int year);
+    CAssessment(int type, const string& name, int motivation, int success, int year); // overloading is done implicitly
     void setMotivation(int motivation);
     void setSuccess(int success);
     void setYear(int year);
