@@ -27,6 +27,9 @@
     <ClCompile Include="CAssessment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CPlagiarismHearing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSpace.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CAssessment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlagiarismHearing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

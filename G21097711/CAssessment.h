@@ -11,6 +11,7 @@ private:
     int mYear;
     bool vyvyanCompleted;
     bool rickCompleted;
+    bool receivedHelp;
 
 public:
     CAssessment(int type, const string& name, int motivation, int success, int year); // overloading is done implicitly
@@ -21,12 +22,6 @@ public:
     int getSuccess();
     int getYear();
     void outputMessage(CPlayer*);
-    bool effect(CPlayer*);
-    bool getVyvyanCompleted();
-    void setVyvyanCompleted(bool completed);
-    bool getRickCompleted();
-    void setRickCompleted(bool completed);
+    void perform(CPlayer*);
+    bool getReceivedHelp();
 };
-
-// Define an alias for the shared pointer
-using CAssessmentPtr = shared_ptr<CAssessment>;

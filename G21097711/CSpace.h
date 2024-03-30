@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <memory>
+#include "CPlayer.h"
 
 using namespace std;
 
@@ -17,6 +18,8 @@ public:
     void setName(const string name);
     virtual int getType() const;
     virtual string getName() const;
+    virtual void outputMessage(CPlayer*);
+    virtual void perform(CPlayer*);
 };
 
 // Define an alias for the shared pointer

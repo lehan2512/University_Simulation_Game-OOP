@@ -19,3 +19,9 @@ int CSpace::getType() const {
 string CSpace::getName() const {
     return mName;
 }
+
+void CSpace::outputMessage(CPlayer*) {}
+
+void CSpace::perform(CPlayer*) {}
+
+

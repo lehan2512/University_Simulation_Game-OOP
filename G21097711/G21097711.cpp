@@ -9,6 +9,7 @@
 #include "CSpace.h"
 #include "CPlayer.h"
 #include "CAssessment.h"
+#include "CPlagiarismHearing.h"
 
 using namespace std;
 
@@ -80,6 +81,10 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
         if (type == 1) {
             spaceVector.push_back(make_shared<CAssessment>(type, name, info.motivation, info.success, info.year));
         }
+        else if (type == 6)
+        {
+            spaceVector.push_back(make_shared<CPlagiarismHearing>(type, name));
+        }
         else {
             spaceVector.push_back(make_shared<CSpace>(type, name));
         }
@@ -150,13 +155,12 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
             int spaceType = spaceVector[currentPosition]->getType();
             string spaceName = spaceVector[currentPosition]->getName();
 
-            // Output landed space
-            cout << playerName << " lands on " << spaceName << endl;
-
-            if (spaceType == 1) {
+            if (spaceType == 1) 
+            {
                 shared_ptr<CAssessment> assessmentSpace = dynamic_pointer_cast<CAssessment>(spaceVector[currentPosition]);
                 if (assessmentSpace) {
-                    if (assessmentSpace->effect(playerVector[j].get()))
+                    assessmentSpace->perform(playerVector[j].get());
+                    if (assessmentSpace->getReceivedHelp())
                     {
                         if (j == 0)
                         {
@@ -170,6 +174,19 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                         }
                     }
                 }
+            }
+            else if (spaceType == 6)
+            {
+                shared_ptr<CPlagiarismHearing> plagiarismHearingSpace = dynamic_pointer_cast<CPlagiarismHearing>(spaceVector[currentPosition]);
+                if (plagiarismHearingSpace)
+                {
+                    plagiarismHearingSpace->perform(playerVector[j].get());
+                }
+            }
+            else
+            {
+                // Output landed space
+                cout << playerName << " lands on " << spaceName << endl;
             }
 
             // Output the player's motivation and success after each turn

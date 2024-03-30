@@ -4,24 +4,11 @@
 
 // Constructor for CAssessment
 CAssessment::CAssessment(int type, const string& name, int motivation, int success, int year)
-    : CSpace(type, name), mMotivationalCost(motivation), mSuccess(success), mYear(year), vyvyanCompleted(false), rickCompleted(false) {
+    : CSpace(type, name), mMotivationalCost(motivation), mSuccess(success), mYear(year), vyvyanCompleted(false), rickCompleted(false), receivedHelp(false) {
 }
-
-
-
-
-
 
 void CAssessment::setYear(int year) {
     mYear = year;
-}
-
-void CAssessment::setVyvyanCompleted(bool completed) {
-    vyvyanCompleted = completed;
-}
-
-void CAssessment::setRickCompleted(bool completed) {
-    rickCompleted = completed;
 }
 
 // Getter methods
@@ -37,23 +24,19 @@ int CAssessment::getYear() {
     return mYear;
 }
 
-bool CAssessment::getVyvyanCompleted() {
-    return vyvyanCompleted;
+bool CAssessment::getReceivedHelp()
+{
+    return receivedHelp;
 }
 
-bool CAssessment::getRickCompleted() {
-    return rickCompleted;
+void CAssessment::outputMessage(CPlayer* player) 
+{
+    cout << player->getName() << " lands on " << mName << endl;
 }
 
-/*
-// Method to output message
-void CAssessment::outputMessage(CPlayer* player) {
-    std::cout << "Output message: " << getMessage() << std::endl; // Assuming getMessage() is a method in CSpace class
-}
-*/
 
 // Method to apply effects of assessment on player
-bool CAssessment::effect(CPlayer* player) {
+void CAssessment::perform(CPlayer* player) {
     int playerIndex = -1; // Index of the player who landed on the assessment
 
     // Determine the player's index (0 for Vyvyan, 1 for Rick)
@@ -69,6 +52,8 @@ bool CAssessment::effect(CPlayer* player) {
     {
         if (player->getMotivation() >= mMotivationalCost)
         {
+            outputMessage(player);
+
             // If player has enough motivation to complete the assessment
             player->setMotivation(player->getMotivation() - mMotivationalCost);
             player->setSuccess(player->getSuccess() + mSuccess);
@@ -82,33 +67,36 @@ bool CAssessment::effect(CPlayer* player) {
             {
                 rickCompleted = true;
             }
-
             cout << player->getName() << " completes  " << mName << " for " << mMotivationalCost << " and achieves " << mSuccess << endl;
         }
-        return false;
 
     }
     else if ((playerIndex == 0 && !vyvyanCompleted) || (playerIndex == 1 && !rickCompleted))
     {
-        // If assessment has not been completed by the player who landed on it
-        int landedPlayerMotivation = player->getMotivation(); // Halve the motivation cost
-        player->setMotivation(landedPlayerMotivation - mMotivationalCost / 2);
-        player->setSuccess(player->getSuccess() + mSuccess / 2);
+        if (player->getMotivation() >= mMotivationalCost)
+        {
+            outputMessage(player);
 
-        if (playerIndex == 0) 
-        {
-            vyvyanCompleted = true;
-        }
-        else 
-        {
-            rickCompleted = true;
-        }
-        cout << player->getName() << " completes  " << mName << " for " << mMotivationalCost / 2 << " and achieves " << mSuccess / 2 << endl;
-        return true;
+            // If assessment has not been completed by the player who landed on it
+            int landedPlayerMotivation = player->getMotivation(); // Halve the motivation cost
+            player->setMotivation(landedPlayerMotivation - mMotivationalCost / 2);
+            player->setSuccess(player->getSuccess() + mSuccess / 2);
+
+            if (playerIndex == 0)
+            {
+                vyvyanCompleted = true;
+            }
+            else
+            {
+                rickCompleted = true;
+            }
+            receivedHelp = true;
+            cout << player->getName() << " completes  " << mName << " for " << mMotivationalCost / 2 << " and achieves " << mSuccess / 2 << endl;
+        } 
     }
     else 
     {
-        return false;
+        outputMessage(player);
     }
 }
 
