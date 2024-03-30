@@ -7,7 +7,7 @@ CAccusedOfPlagiarism::CAccusedOfPlagiarism(int type, const string& name) : CSpac
 void CAccusedOfPlagiarism::outputMessage(CPlayer* player)
 {
 	cout << player->getName() << " lands on Accused of Plagiarism and goes to hearing" << endl;
-	cout << player->getName() << " loses motivation" << endl << endl;
+	cout << player->getName() << " loses motivation" << endl;
 }
 
 void CAccusedOfPlagiarism::perform(CPlayer* player, int indexOfPlagiarismHearing)

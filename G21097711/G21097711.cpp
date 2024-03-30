@@ -2,15 +2,16 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <string>
+//#include <string>
 #include <memory>
-#include <cctype>
-#include <cstdlib>
+//#include <cctype>
+//#include <cstdlib>
 #include "CSpace.h"
 #include "CPlayer.h"
 #include "CAssessment.h"
 #include "CPlagiarismHearing.h"
 #include "CAccusedOfPlagiarism.h"
+#include "CSkipClasses.h"
 
 using namespace std;
 
@@ -88,9 +89,9 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
         {
             spaceVector.push_back(make_shared<CAccusedOfPlagiarism>(type, name));
         }
-        else if (type == NULL)
+        else if (type == 8)
         {
-            return;
+            spaceVector.push_back(make_shared<CSkipClasses>(type, name));
         }
         else {
             spaceVector.push_back(make_shared<CSpace>(type, name));
@@ -193,6 +194,14 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                     accusedOfPlagiarismSpace->perform(playerVector[j].get(), INDEX_OF_PLAGIARISM_HEARING_SPACE_ON_BOARD);
                 }
             }
+            else if (spaceType == 8)
+            {
+                shared_ptr<CSkipClasses> skipClassesSpace = dynamic_pointer_cast<CSkipClasses>(spaceVector[currentPosition]);
+                if (skipClassesSpace)
+                {
+                    skipClassesSpace->perform(playerVector[j].get());
+                }
+            }
             else
             {
                 // Output landed space
@@ -229,7 +238,7 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
     {
         winner = nameOfRick;
     }
-    cout << winner << " wins." << endl;
+    cout << endl << winner << " wins." << endl;
 }
 
 int main()
