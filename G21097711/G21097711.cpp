@@ -159,20 +159,18 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
             {
                 shared_ptr<CAssessment> assessmentSpace = dynamic_pointer_cast<CAssessment>(spaceVector[currentPosition]);
                 if (assessmentSpace) {
-                    assessmentSpace->perform(playerVector[j].get());
-                    if (assessmentSpace->getReceivedHelp())
+                    CPlayer* playerInSpace = playerVector[j].get();
+                    CPlayer* helper;
+                    if (j == 0)
                     {
-                        if (j == 0)
-                        {
-                            playerVector[1]->setSuccess(playerVector[1]->getSuccess() + assessmentSpace->getSuccess() / 2);
-                            cout << playerVector[1]->getName() << " helps and achieves " << assessmentSpace->getSuccess() / 2 << endl;
-                        }
-                        else
-                        {
-                            playerVector[0]->setSuccess(playerVector[0]->getSuccess() + assessmentSpace->getSuccess() / 2);
-                            cout << playerVector[0]->getName() << " helps and achieves " << assessmentSpace->getSuccess() / 2 << endl;
-                        }
+                        helper = playerVector[1].get();
                     }
+                    else
+                    {
+                        helper = playerVector[0].get();
+                    }
+
+                    assessmentSpace->perform(playerInSpace, helper);
                 }
             }
             else if (spaceType == 6)

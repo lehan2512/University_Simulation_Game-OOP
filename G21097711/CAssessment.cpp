@@ -11,6 +11,11 @@ void CAssessment::setYear(int year) {
     mYear = year;
 }
 
+void CAssessment::setReceivedHelp(bool isFalse)
+{
+    receivedHelp = isFalse;
+}
+
 // Getter methods
 int CAssessment::getMotivation() {
     return mMotivationalCost;
@@ -36,7 +41,7 @@ void CAssessment::outputMessage(CPlayer* player)
 
 
 // Method to apply effects of assessment on player
-void CAssessment::perform(CPlayer* player) {
+void CAssessment::perform(CPlayer* player, CPlayer* helper) {
     int playerIndex = -1; // Index of the player who landed on the assessment
 
     // Determine the player's index (0 for Vyvyan, 1 for Rick)
@@ -92,11 +97,15 @@ void CAssessment::perform(CPlayer* player) {
             }
             receivedHelp = true;
             cout << player->getName() << " completes  " << mName << " for " << mMotivationalCost / 2 << " and achieves " << mSuccess / 2 << endl;
+
+            // Friend receiving success for helping
+            helper->setSuccess(helper->getSuccess() + (mSuccess / 2));
+            cout << helper->getName() << " helps and achieves " << mSuccess / 2 << endl;
         } 
     }
     else 
     {
-        outputMessage(player);
+        outputMessage(player);  // If player has already completed the task or does not have enough motivation to do the task, outputs space landed on
     }
 }
 

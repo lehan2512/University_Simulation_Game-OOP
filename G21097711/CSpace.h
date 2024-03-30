@@ -12,10 +12,10 @@ protected:
     string mName;
 
 public:
-    CSpace(int type, const string name);
+    CSpace(int, const string);
     virtual ~CSpace() = default; // Virtual destructor
-    void setType(int type);
-    void setName(const string name);
+    void setType(int);
+    void setName(const string);
     virtual int getType() const;
     virtual string getName() const;
     virtual void outputMessage(CPlayer*);

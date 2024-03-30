@@ -22,6 +22,7 @@ public:
     int getSuccess();
     int getYear();
     void outputMessage(CPlayer*);
-    void perform(CPlayer*);
+    void perform(CPlayer*, CPlayer*);
     bool getReceivedHelp();
+    void setReceivedHelp(bool);
 };
