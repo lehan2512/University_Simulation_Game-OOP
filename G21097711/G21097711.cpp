@@ -30,29 +30,38 @@ SpaceInfo extractSpaceInfo(const string& line) {
     info.success = 0;
     info.year = 0;
     ss >> info.type >> ws; // Extract type and skip leading whitespace
+
     string word;
+    // Extract name
     while (ss >> word) {
-        if (!isalpha(word[0])) break; // Check if the first character is alphabetic
-        // If name is empty, directly assign word to it
-        if (info.name.empty()) {
-            info.name = word;
-        }
-        else {
-            // If name is not empty, append a space followed by the word
-            info.name += " " + word;
-        }
+        if (isdigit(word[0])) break; // If word starts with a digit, break
+        if (!info.name.empty()) info.name += " "; // Add space if name is not empty
+        info.name += word;
     }
+
     // If type is 1, extract motivational cost, success score, and year
     if (info.type == 1) {
-        ss >> info.motivation >> info.success >> info.year;
+        // Extract motivational cost
+        info.motivation = stoi(word);
+
+        // Extract success score
+        ss >> info.success;
+
+        // Extract year
+        ss >> info.year;
     }
+
+
     return info;
 }
+
+
 
 // GAME INITIALIZATION
 //Extracts information from degrees.txt file, creates spaces, creates players
 void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& playerVector)
 {
+
     ifstream file("degrees.txt");
     if (!file)
     {
@@ -63,6 +72,7 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
     string line;
     while (getline(file, line)) {
         SpaceInfo info = extractSpaceInfo(line);
+
         int type = info.type;
         string name = info.name;
 
@@ -97,10 +107,9 @@ int Random()
 }
 
 // FIRST GAMEPLAY
-void gameplay(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& playerVector)
+void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playerVector)
 {
     srand(48);
-    int currentPosition = 0;
 
     for (int i = 0; i < 20; i++)
     {
@@ -110,40 +119,99 @@ void gameplay(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& playerVector)
         for (int j = 0; j < 2; j++)
         {
             string playerName = playerVector[j]->getName();
-            currentPosition = playerVector[j]->getPosition();
+            int currentPosition = playerVector[j]->getPosition();
             int currentYear = playerVector[j]->getYear();
             int currentMotivation = playerVector[j]->getMotivation();
+            int currentSuccess = playerVector[j]->getSuccess();
 
             int spin = Random();
 
             cout << playerName << " spins " << spin << endl;
 
             currentPosition = currentPosition + spin;
+
+            // if completed a year
             if (currentPosition > 35)
             {
                 currentPosition -= 35;
-                playerVector[j]->setYear(currentYear + 1);
-                currentYear = playerVector[j]->getYear();
-                playerVector[j]->setMotivation(currentMotivation + 250);
+                currentYear += 1;
+                currentMotivation += 250;
+
+                playerVector[j]->setYear(currentYear);
+                playerVector[j]->setMotivation(currentMotivation);
+                playerVector[j]->setYear(currentYear);
+
                 cout << playerName << " attends Welcome Week and starts year " << currentYear << " more motivated" << endl;
             }
+
             playerVector[j]->setPosition(currentPosition);
 
-            cout << playerName << " lands on " << spaceVector[currentPosition]->getName() << endl << endl;
+            // Getting the details of the space
+            int spaceType = spaceVector[currentPosition]->getType();
+            string spaceName = spaceVector[currentPosition]->getName();
+
+            // Output landed space
+            cout << playerName << " lands on " << spaceName << endl;
+
+            if (spaceType == 1) {
+                shared_ptr<CAssessment> assessmentSpace = dynamic_pointer_cast<CAssessment>(spaceVector[currentPosition]);
+                if (assessmentSpace) {
+                    if (assessmentSpace->effect(playerVector[j].get()))
+                    {
+                        if (j == 0)
+                        {
+                            playerVector[1]->setSuccess(playerVector[1]->getSuccess() + assessmentSpace->getSuccess() / 2);
+                            cout << playerVector[1]->getName() << " helps and achieves " << assessmentSpace->getSuccess() / 2 << endl;
+                        }
+                        else
+                        {
+                            playerVector[0]->setSuccess(playerVector[0]->getSuccess() + assessmentSpace->getSuccess() / 2);
+                            cout << playerVector[0]->getName() << " helps and achieves " << assessmentSpace->getSuccess() / 2 << endl;
+                        }
+                    }
+                }
+            }
+
+            // Output the player's motivation and success after each turn
+            currentMotivation = playerVector[j]->getMotivation();
+            currentSuccess = playerVector[j]->getSuccess();
+            cout << playerName << "'s motivation is " << currentMotivation << " and success is " << currentSuccess << endl << endl;
         }
     }
+
+    cout << "Game Over" << endl;
+    cout << "=========" << endl;
+
+    // Output scores
+    string nameOfVyvyan = playerVector[0]->getName();
+    int successOfVyvyan = playerVector[0]->getSuccess();
+
+    string nameOfRick = playerVector[1]->getName();
+    int successOfRick = playerVector[1]->getSuccess();
+
+    cout << nameOfVyvyan << " has achieved " << successOfVyvyan << endl;
+    cout << nameOfRick << " has achieved " << successOfRick << endl;
+
+    // Output winner
+    string winner;
+    if (successOfVyvyan > successOfRick)
+    {
+        winner = nameOfVyvyan;
+    }
+    else
+    {
+        winner = nameOfRick;
+    }
+    cout << winner << " wins." << endl;
 }
 
 int main()
 {
-    vector<CSpacePtr> spaceVector;  // Vector for spaces on board
+    vector<shared_ptr<CSpace>> spaceVector;  // Vector for spaces on board
     vector<CPlayerPtr> playerVector;    // Vector for players
 
     gameInitialization(spaceVector, playerVector);
     gameplay(spaceVector, playerVector);
-
-    cout << "Game Over" << endl;
-    cout << "=========" << endl;
 
     return 0;
 }

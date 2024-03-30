@@ -11,11 +11,12 @@ protected:
     string mName;
 
 public:
-    CSpace(int type, const string name); 
+    CSpace(int type, const string name);
+    virtual ~CSpace() = default; // Virtual destructor
     void setType(int type);
     void setName(const string name);
-    int getType() const;
-    string getName() const;
+    virtual int getType() const;
+    virtual string getName() const;
 };
 
 // Define an alias for the shared pointer

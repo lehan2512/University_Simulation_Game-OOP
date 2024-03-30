@@ -6,9 +6,11 @@ class CAssessment :
     public CSpace
 {
 private:
-    int mMotivation;
+    int mMotivationalCost;
     int mSuccess;
     int mYear;
+    bool vyvyanCompleted;
+    bool rickCompleted;
 
 public:
     CAssessment(int type, const string& name, int motivation, int success, int year); // overloading is done implicitly
@@ -19,7 +21,11 @@ public:
     int getSuccess();
     int getYear();
     void outputMessage(CPlayer*);
-    void effect(CPlayer*);
+    bool effect(CPlayer*);
+    bool getVyvyanCompleted();
+    void setVyvyanCompleted(bool completed);
+    bool getRickCompleted();
+    void setRickCompleted(bool completed);
 };
 
 // Define an alias for the shared pointer
