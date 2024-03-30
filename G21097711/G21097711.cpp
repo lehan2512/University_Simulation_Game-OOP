@@ -10,6 +10,7 @@
 #include "CPlayer.h"
 #include "CAssessment.h"
 #include "CPlagiarismHearing.h"
+#include "CAccusedOfPlagiarism.h"
 
 using namespace std;
 
@@ -51,8 +52,6 @@ SpaceInfo extractSpaceInfo(const string& line) {
         // Extract year
         ss >> info.year;
     }
-
-
     return info;
 }
 
@@ -85,18 +84,22 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
         {
             spaceVector.push_back(make_shared<CPlagiarismHearing>(type, name));
         }
+        else if (type == 7)
+        {
+            spaceVector.push_back(make_shared<CAccusedOfPlagiarism>(type, name));
+        }
+        else if (type == NULL)
+        {
+            return;
+        }
         else {
             spaceVector.push_back(make_shared<CSpace>(type, name));
         }
     }
 
-    //creating first two players
-    CPlayerPtr vyvyan = make_shared<CPlayer>("Vyvyan");
-    CPlayerPtr rick = make_shared<CPlayer>("Rick");
-
-    // Add players to the PlayerVector
-    playerVector.push_back(vyvyan);
-    playerVector.push_back(rick);
+    // Creating first two players and adding to the PlayerVector
+    playerVector.push_back(make_shared<CPlayer>("Vyvyan"));
+    playerVector.push_back(make_shared<CPlayer>("Rick"));
 
     cout << "Welcome to Scumbag College" << endl << endl;
 
@@ -138,7 +141,7 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
             // if completed a year
             if (currentPosition > 35)
             {
-                currentPosition -= 35;
+                currentPosition -= 36;
                 currentYear += 1;
                 currentMotivation += 250;
 
@@ -179,6 +182,15 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                 if (plagiarismHearingSpace)
                 {
                     plagiarismHearingSpace->perform(playerVector[j].get());
+                }
+            }
+            else if (spaceType == 7)
+            {
+                shared_ptr<CAccusedOfPlagiarism> accusedOfPlagiarismSpace = dynamic_pointer_cast<CAccusedOfPlagiarism>(spaceVector[currentPosition]);
+                if (accusedOfPlagiarismSpace)
+                {
+                    const int INDEX_OF_PLAGIARISM_HEARING_SPACE_ON_BOARD = 32;
+                    accusedOfPlagiarismSpace->perform(playerVector[j].get(), INDEX_OF_PLAGIARISM_HEARING_SPACE_ON_BOARD);
                 }
             }
             else

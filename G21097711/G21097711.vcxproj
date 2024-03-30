@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CAccussedOfPlagiarism.cpp" />
+    <ClCompile Include="CAccusedOfPlagiarism.cpp" />
     <ClCompile Include="CAssessment.cpp" />
     <ClCompile Include="CPlagiarismHearing.cpp" />
     <ClCompile Include="CPlayer.cpp" />
@@ -135,7 +135,7 @@
     <ClCompile Include="G21097711.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CAccussedOfPlagiarism.h" />
+    <ClInclude Include="CAccusedOfPlagiarism.h" />
     <ClInclude Include="CAssessment.h" />
     <ClInclude Include="CPlagiarismHearing.h" />
     <ClInclude Include="CPlayer.h" />

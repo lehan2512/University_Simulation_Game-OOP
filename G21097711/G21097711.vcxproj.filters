@@ -30,7 +30,7 @@
     <ClCompile Include="CPlagiarismHearing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CAccussedOfPlagiarism.cpp">
+    <ClCompile Include="CAccusedOfPlagiarism.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="CPlagiarismHearing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAccussedOfPlagiarism.h">
+    <ClInclude Include="CAccusedOfPlagiarism.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
