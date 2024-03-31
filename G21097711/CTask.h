@@ -28,5 +28,6 @@ public:
     virtual void perform(CPlayer*, CPlayer*);   // Perform changes to player attribute when landed on space
     virtual void playerOutput(CPlayer* player); // Player output after completing the task
     virtual void affectFriendForHelping(CPlayer*, CPlayer*);    // Perform changes to friend's attributes for helping
+    void addToCompletedTasks(CPlayer*, int assessmentYear); // When task is completed, increments completed tasks of that year
 };
 

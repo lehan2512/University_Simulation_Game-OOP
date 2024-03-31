@@ -11,10 +11,12 @@ private:
     int mSuccess;
     int mYear;
     int mPosition;
+    int mYearOneTasks;
+    int mYearTwoTasks;
+    int mYearThreeTasks;
 
 public:
     CPlayer(std::string name);
-    void setName(std::string name);
     void setMotivation(int motivation);
     void setSuccess(unsigned int success);
     void setYear(int year);
@@ -24,7 +26,13 @@ public:
     int getSuccess();
     int getYear();
     int getPosition();
+    void setYearOneTasks(int addTask);
+    void setYearTwoTasks(int addTask);
+    void setYearThreeTasks(int addTask);
+    int getYearOneTasks();
+    int getYearTwoTasks();
+    int getYearThreeTasks();
 };
 
-// Define an alias for the shared pointer
+// Defined an alias for the shared pointer
 using CPlayerPtr = std::shared_ptr<CPlayer>;

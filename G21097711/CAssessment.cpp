@@ -14,6 +14,19 @@ int CAssessment::getYear() {
 void CAssessment::playerOutput(CPlayer* player)
 {
     cout << player->getName() << " completes  " << mName << " for " << getMotivationalCost() << " and achieves " << getSuccessAchieved() << endl;
+
+    if (getYear() == 1)
+    {
+        player->setYearOneTasks(player->getYearOneTasks() + 1);
+    }
+    else if (getYear() == 2)
+    {
+        player->setYearTwoTasks(player->getYearTwoTasks() + 1);
+    }
+    else
+    {
+        player->setYearThreeTasks(player->getYearThreeTasks() + 1);
+    }
 }
 
 // Overriding changes to friend and output message for friend when helped with Assessment

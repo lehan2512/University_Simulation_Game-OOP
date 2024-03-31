@@ -66,6 +66,7 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
                 rickCompleted = true;
             }
             playerOutput(player);
+            
 
             //reduce the motivational cost and success achieved from the task so that when another player comes to this task, they receive half and helper receives half
             mMotivationalCost = mMotivationalCost / 2;
@@ -114,3 +115,8 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
 void CTask::playerOutput(CPlayer* player) {} // As mentioned in header file this function is to be overrridden in derived classes
 
 void CTask::affectFriendForHelping(CPlayer*, CPlayer*) {} // As mentioned in header file this function is to be overrridden in derived classes
+
+/*void CTask::addToCompletedTasks(CPlayer* player)
+{
+    
+}*/
