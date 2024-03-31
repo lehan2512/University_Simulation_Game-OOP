@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="CAccusedOfPlagiarism.cpp" />
     <ClCompile Include="CAssessment.cpp" />
+    <ClCompile Include="CBogus.cpp" />
     <ClCompile Include="CBonus.cpp" />
     <ClCompile Include="CBonusBogusManager.cpp" />
     <ClCompile Include="CExtraCurricular.cpp" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="CAccusedOfPlagiarism.h" />
     <ClInclude Include="CAssessment.h" />
+    <ClInclude Include="CBogus.h" />
     <ClInclude Include="CBonus.h" />
     <ClInclude Include="CBonusBogusManager.h" />
     <ClInclude Include="CExtraCurricular.h" />

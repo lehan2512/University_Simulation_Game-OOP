@@ -66,10 +66,16 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
                 rickCompleted = true;
             }
             playerOutput(player);
+
+            //reduce the motivational cost and success achieved from the task so that when another player comes to this task, they receive half and helper receives half
+            mMotivationalCost = mMotivationalCost / 2;
+            mSuccessAchieved = mSuccessAchieved / 2;
         }
-        //reduce the motivational cost and success achieved from the task so that when another player comes to this task, they receive half and helper receives half
-        mMotivationalCost = mMotivationalCost / 2;
-        mSuccessAchieved = mSuccessAchieved / 2;
+        else
+        {
+            cout << player->getName() << " doesn't have the " << mMotivationalCost << " motivation to complete the " << mName << endl;
+        }
+        
     }
     //If assessment has not been completed by the player who landed on it but completed by another player
     else if ((playerIndex == 0 && !vyvyanCompleted) || (playerIndex == 1 && !rickCompleted))

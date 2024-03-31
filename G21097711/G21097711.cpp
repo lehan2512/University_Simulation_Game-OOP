@@ -11,7 +11,7 @@
 #include "CAssessment.h"
 #include "CExtraCurricular.h"
 #include "CBonus.h"
-
+#include "CBogus.h"
 #include "CPlagiarismHearing.h"
 #include "CAccusedOfPlagiarism.h"
 #include "CSkipClasses.h"
@@ -104,7 +104,12 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
         {
             spaceVector.push_back(make_shared<CBonus>(type, name));
         }
-        // Check if type is 6, create CPlagiarismHearing object
+        // Check if type is 5, create CBogus object
+        else if (type == 5)
+        {
+            spaceVector.push_back(make_shared<CBogus>(type, name));
+        }
+        // Check if type is 6, create CPlagiarismHearing object 
         else if (type == 6)
         {
             spaceVector.push_back(make_shared<CPlagiarismHearing>(type, name));
@@ -237,17 +242,29 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                     extraCurricularSpace->perform(playerInSpace, helper);
                 }
             }
-            // Effect if player lands on an Extra-Curricular Activity space
+            // Effect if player lands on an Bonus space
             else if (spaceType == 4)
             {
-                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CExtraCurricular 
-                // extraCurricularSpace point to that element
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CBonus 
+                // bonusSpace point to that element
                 shared_ptr<CBonus> bonusSpace = dynamic_pointer_cast<CBonus>(spaceVector[currentPosition]);
                 if (bonusSpace) {
 
                     //spin again
                     int spinnedAgain = spin();
                     bonusSpace->perform(playerVector[j].get(), spinnedAgain);
+                }
+            }
+            // Effect if player lands on an Bogus space
+            else if (spaceType == 5)
+            {
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CBogus 
+                // bogusSpace point to that element
+                shared_ptr<CBogus> bogusSpace = dynamic_pointer_cast<CBogus>(spaceVector[currentPosition]);
+                if (bogusSpace) {
+                    //spin again
+                    int spinnedAgain = spin();
+                    bogusSpace->perform(playerVector[j].get(), spinnedAgain);
                 }
             }
             // Effect if player lands on an Plagiarism Hearing space
@@ -321,7 +338,7 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
     {
         winner = nameOfRick;
     }
-    cout << endl << winner << " wins." << endl;
+    cout << endl << winner << " wins!" << endl;
 }
 
 int main()
