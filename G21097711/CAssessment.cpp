@@ -13,6 +13,11 @@ int CAssessment::getYear() {
 
 void CAssessment::playerOutput(CPlayer* player)
 {
+    cout << player->getName() << " completes  " << mName << " for " << getMotivation() << " and achieves " << getSuccess() << endl;
+}
+
+void CAssessment::playerOutputIfHelped(CPlayer* player)
+{
     cout << player->getName() << " completes  " << mName << " for " << getMotivation() / 2 << " and achieves " << getSuccess() / 2 << endl;
 }
 

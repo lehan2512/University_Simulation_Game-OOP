@@ -25,6 +25,7 @@ public:
     void outputMessage(CPlayer*);
     virtual void perform(CPlayer*, CPlayer*);
     virtual void playerOutput(CPlayer* player);
+    virtual void playerOutputIfHelped(CPlayer* player);
     virtual void affectFriendForHelping(CPlayer*, CPlayer*);
 };
 

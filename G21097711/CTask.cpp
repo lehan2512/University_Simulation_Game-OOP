@@ -61,7 +61,7 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
             {
                 rickCompleted = true;
             }
-            cout << player->getName() << " completes  " << mName << " for " << mMotivationalCost << " and achieves " << mSuccess << endl;
+            playerOutput(player);
         }
 
     }
@@ -85,7 +85,7 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
                 rickCompleted = true;
             }
             receivedHelp = true;
-            playerOutput(player);
+            playerOutputIfHelped(player);
 
             affectFriendForHelping(player, helper);
         }
@@ -97,5 +97,7 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
 }
 
 void CTask::playerOutput(CPlayer* player) {}
+
+void CTask::playerOutputIfHelped(CPlayer* player) {}
 
 void CTask::affectFriendForHelping(CPlayer*, CPlayer*) {}
