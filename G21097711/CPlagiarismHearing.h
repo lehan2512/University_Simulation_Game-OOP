@@ -7,7 +7,7 @@ class CPlagiarismHearing :
 {
 public:
     CPlagiarismHearing(int type, const string& name);
-    void outputMessage(CPlayer*);
-    void perform(CPlayer*);
+    void outputMessage(CPlayer*) override;
+    void perform(CPlayer*) override;
 };
 

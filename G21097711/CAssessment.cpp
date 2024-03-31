@@ -1,30 +1,26 @@
 #include "CAssessment.h"
-#include "CSpace.h"
 #include "CTask.h"
 #include <iostream>
 
 // Constructor for CAssessment
-CAssessment::CAssessment(int type, const string& name, int motivation, int success, int year)
-    : CTask (type, name, motivation, success), mYear(year) {}
+CAssessment::CAssessment(int type, const string& name, int motivationalCost, int successAchieved, int year)
+    : CTask (type, name, motivationalCost, successAchieved), mYear(year) {}
 
 int CAssessment::getYear() {
     return mYear;
 }
 
+// Overrriding player output when completing an assignment
 void CAssessment::playerOutput(CPlayer* player)
 {
-    cout << player->getName() << " completes  " << mName << " for " << getMotivation() << " and achieves " << getSuccess() << endl;
+    cout << player->getName() << " completes  " << mName << " for " << getMotivationalCost() << " and achieves " << getSuccessAchieved() << endl;
 }
 
-void CAssessment::playerOutputIfHelped(CPlayer* player)
-{
-    cout << player->getName() << " completes  " << mName << " for " << getMotivation() / 2 << " and achieves " << getSuccess() / 2 << endl;
-}
-
+// Overriding changes to friend and output message for friend when helped with Assessment
 void CAssessment::affectFriendForHelping(CPlayer* player, CPlayer* helper)
 {
     // Friend receiving success for helping
-    helper->setSuccess(helper->getSuccess() + (getSuccess() / 2));
-    cout << helper->getName() << " helps and achieves " << getSuccess() / 2 << endl;
+    helper->setSuccess(helper->getSuccess() + getSuccessAchieved());
+    cout << helper->getName() << " helps and achieves " << getSuccessAchieved() << endl;
 }
 

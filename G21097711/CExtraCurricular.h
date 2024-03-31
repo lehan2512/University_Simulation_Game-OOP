@@ -6,9 +6,8 @@ class CExtraCurricular :
     public CTask
 {
 public:
-    CExtraCurricular(int type, const string& name, int motivation, int success); // overloading is done implicitly
+    CExtraCurricular(int type, const string& name, int motivationalCost, int successAchieved); // overloading is done implicitly
     void playerOutput(CPlayer* player) override;
-    void playerOutputIfHelped(CPlayer* player) override;
     void affectFriendForHelping(CPlayer* player, CPlayer* helper) override;
 };
 

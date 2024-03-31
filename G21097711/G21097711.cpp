@@ -20,18 +20,18 @@ using namespace std;
 struct SpaceInfo {
     int type;
     string name;
-    int motivation;
-    int success;
+    int motivationalCost;
+    int successAchieved;
     int year;
 };
 
-// FUNCTION TO EXTRACT SPACE TYPE AND SPACE NAME AND SPACE DETAILS IF ANY
-// Method I used is to store the extracted data in a structure and returning the structure
+// FUNCTION TO EXTRACT SPACE TYPE AND SPACE NAME AND SPACE DETAILS(IF ANY)
+// Method I used: store the extracted data in a structure and returning the structure
 SpaceInfo extractSpaceInfo(const string& line) {
     stringstream ss(line);
     SpaceInfo info;
-    info.motivation = 0;
-    info.success = 0;
+    info.motivationalCost = 0;
+    info.successAchieved = 0;
     info.year = 0;
     ss >> info.type >> ws; // Extract type and skip leading whitespace
 
@@ -43,26 +43,36 @@ SpaceInfo extractSpaceInfo(const string& line) {
         info.name += word;
     }
 
-    // If type is 1, extract motivational cost, success score, and year
+    // If space type is 1(Assessment), extract motivational motivational cost, success achieved and year
     if (info.type == 1) {
         // Extract motivational cost
-        info.motivation = stoi(word);
+        info.motivationalCost = stoi(word);
 
         // Extract success score
-        ss >> info.success;
+        ss >> info.successAchieved;
 
         // Extract year
         ss >> info.year;
     }
-    return info;
+    // If type is 3(Extra-Curricular Activity), extract motivational cost
+    else if (info.type == 3)
+    {
+        // Extract motivational cost
+        info.motivationalCost = stoi(word);
+    }
+    else{}
+
+    return info; // return the structure
 }
 
 
 
 // GAME INITIALIZATION
-//Extracts information from degrees.txt file, creates spaces, creates players
+//Extracts information from degrees.txt file, creates spaces, creates players, set position of players to first space and output welcome message
 void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& playerVector)
 {
+    const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
+    const int MOTIVATIONAL_COST_OF_ACCUSED_OF_PLAGIARISM = 50;
 
     ifstream file("degrees.txt");
     if (!file)
@@ -80,24 +90,29 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
 
         // Check if type is 1, create CAssessment object
         if (type == 1) {
-            spaceVector.push_back(make_shared<CAssessment>(type, name, info.motivation, info.success, info.year));
+            spaceVector.push_back(make_shared<CAssessment>(type, name, info.motivationalCost, info.successAchieved, info.year));
         }
+        // Check if type is 1, create CExtraCurricular object
         else if (type == 3)
         {
-            spaceVector.push_back(make_shared<CExtraCurricular>(type, name, 100, 20));
+            spaceVector.push_back(make_shared<CExtraCurricular>(type, name, info.motivationalCost, SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR));
         }
+        // Check if type is 1, create CPlagiarismHearing object
         else if (type == 6)
         {
             spaceVector.push_back(make_shared<CPlagiarismHearing>(type, name));
         }
+        // Check if type is 1, create CAccusedOfPlagiarism object
         else if (type == 7)
         {
-            spaceVector.push_back(make_shared<CAccusedOfPlagiarism>(type, name));
+            spaceVector.push_back(make_shared<CAccusedOfPlagiarism>(type, name, MOTIVATIONAL_COST_OF_ACCUSED_OF_PLAGIARISM));
         }
+        // Check if type is 1, create CSkipClasses object
         else if (type == 8)
         {
             spaceVector.push_back(make_shared<CSkipClasses>(type, name));
         }
+        // Create a CSpace object for other spaces
         else {
             spaceVector.push_back(make_shared<CSpace>(type, name));
         }
@@ -109,6 +124,7 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
 
     cout << "Welcome to Scumbag College" << endl << endl;
 
+    // Set player position to first space(welcome week)
     playerVector[0]->setPosition(0);
     playerVector[1]->setPosition(0);
 }
@@ -123,13 +139,16 @@ int Random()
 // FIRST GAMEPLAY
 void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playerVector)
 {
+    //seed
     srand(48);
 
+    // Play 20 rounds in iteration
     for (int i = 0; i < 20; i++)
     {
         cout << "ROUND " << i + 1 << endl;
         cout << "=========" << endl;
 
+        // iterate two players in each round
         for (int j = 0; j < 2; j++)
         {
             string playerName = playerVector[j]->getName();
@@ -138,13 +157,12 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
             int currentMotivation = playerVector[j]->getMotivation();
             int currentSuccess = playerVector[j]->getSuccess();
 
+            // Perform spin and change position
             int spin = Random();
-
             cout << playerName << " spins " << spin << endl;
-
             currentPosition = currentPosition + spin;
 
-            // if completed a year
+            // Effect if completed a year in current round
             if (currentPosition > 35)
             {
                 currentPosition -= 36;
@@ -160,12 +178,15 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
 
             playerVector[j]->setPosition(currentPosition);
 
-            // Getting the details of the space
+            // Getting details of the space
             int spaceType = spaceVector[currentPosition]->getType();
             string spaceName = spaceVector[currentPosition]->getName();
 
+            // Effect if player lands on an Assessment space
             if (spaceType == 1) 
             {
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CAssessment. 
+                // AssessmentSpace point to that element
                 shared_ptr<CAssessment> assessmentSpace = dynamic_pointer_cast<CAssessment>(spaceVector[currentPosition]);
                 if (assessmentSpace) {
                     CPlayer* playerInSpace = playerVector[j].get();
@@ -182,8 +203,11 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                     assessmentSpace->perform(playerInSpace, helper);
                 }
             }
+            // Effect if player lands on an Extra-Curricular Activity space
             else if (spaceType == 3)
             {
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CExtraCurricular 
+                // extraCurricularSpace point to that element
                 shared_ptr<CExtraCurricular> extraCurricularSpace = dynamic_pointer_cast<CExtraCurricular>(spaceVector[currentPosition]);
                 if (extraCurricularSpace) {
                     CPlayer* playerInSpace = playerVector[j].get();
@@ -200,16 +224,22 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                     extraCurricularSpace->perform(playerInSpace, helper);
                 }
             }
+            // Effect if player lands on an Plagiarism Hearing space
             else if (spaceType == 6)
             {
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CPlagiarismHearing 
+                // plagiarismHearingSpace point to that element
                 shared_ptr<CPlagiarismHearing> plagiarismHearingSpace = dynamic_pointer_cast<CPlagiarismHearing>(spaceVector[currentPosition]);
                 if (plagiarismHearingSpace)
                 {
                     plagiarismHearingSpace->perform(playerVector[j].get());
                 }
             }
+            // Effect if player lands on an Accused of Plagiarism space
             else if (spaceType == 7)
             {
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CAccusedOfPlagiarism 
+                // accusedOfPlagiarismSpace point to that element
                 shared_ptr<CAccusedOfPlagiarism> accusedOfPlagiarismSpace = dynamic_pointer_cast<CAccusedOfPlagiarism>(spaceVector[currentPosition]);
                 if (accusedOfPlagiarismSpace)
                 {
@@ -217,14 +247,18 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                     accusedOfPlagiarismSpace->perform(playerVector[j].get(), INDEX_OF_PLAGIARISM_HEARING_SPACE_ON_BOARD);
                 }
             }
+            // Effect if player lands on an Skip Classes space
             else if (spaceType == 8)
             {
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CSkipClasses 
+                // skipClassesSpace point to that element
                 shared_ptr<CSkipClasses> skipClassesSpace = dynamic_pointer_cast<CSkipClasses>(spaceVector[currentPosition]);
                 if (skipClassesSpace)
                 {
                     skipClassesSpace->perform(playerVector[j].get());
                 }
             }
+            // Effect if player lands on an other spaces
             else
             {
                 // Output landed space

@@ -2,7 +2,8 @@
 #include "CSpace.h"
 #include <iostream>
 
-CAccusedOfPlagiarism::CAccusedOfPlagiarism(int type, const string& name) : CSpace(type, name) {}
+CAccusedOfPlagiarism::CAccusedOfPlagiarism(int type, const string& name, int motivationalCost) 
+	: CSpace(type, name), mMotivationalCost(motivationalCost) {}
 
 void CAccusedOfPlagiarism::outputMessage(CPlayer* player)
 {
@@ -10,10 +11,11 @@ void CAccusedOfPlagiarism::outputMessage(CPlayer* player)
 	cout << player->getName() << " loses motivation" << endl;
 }
 
+// Overridden Function to perform changes to player attributes in this space
 void CAccusedOfPlagiarism::perform(CPlayer* player, int indexOfPlagiarismHearing)
 {
-	// Set player position to Plagerism Hearing
+	// Set player position to Plagerism Hearing and reduction motivation
 	player->setPosition(indexOfPlagiarismHearing);
-	player->setMotivation(player->getMotivation() - 50);
+	player->setMotivation(player->getMotivation() - mMotivationalCost);
 	outputMessage(player);
 }

@@ -22,5 +22,5 @@ public:
     virtual void perform(CPlayer*);
 };
 
-// Define an alias for the shared pointer
+// Define an alias for the shared pointer of type CSpace. All spaces will be creted using this shared pointer
 using CSpacePtr = shared_ptr<CSpace>;

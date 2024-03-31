@@ -1,26 +1,22 @@
 #include "CExtraCurricular.h"
-#include "CSpace.h"
 #include "CTask.h"
 #include <iostream>
 
 // Constructor for CExtraCurricular
-CExtraCurricular::CExtraCurricular(int type, const string& name, int motivation, int success)
-    : CTask(type, name, motivation, 20) {}
+CExtraCurricular::CExtraCurricular(int type, const string& name, int motivationalCost, int successAchieved)
+    : CTask(type, name, motivationalCost, successAchieved) {}
 
+// Overrriding player output when completing an Extra-curricular activity
 void CExtraCurricular::playerOutput(CPlayer* player)
 {
-    cout << player->getName() << " undertakes " << getName() << " for " << getMotivation() << " and achieves " << getSuccess() << endl;
+    cout << player->getName() << " undertakes " << getName() << " for " << getMotivationalCost() << " and achieves " << getSuccessAchieved() << endl;
 }
 
-void CExtraCurricular::playerOutputIfHelped(CPlayer* player)
-{
-    cout << player->getName() << " undertakes " << getName() << " for " << getMotivation() / 2 << " and achieves " << getSuccess() / 2 << endl;
-}
-
+// Overriding changes to friend and output message for friend when helped with Extra-curricular activity
 void CExtraCurricular::affectFriendForHelping(CPlayer* player, CPlayer* helper)
 {
     // Friend receiving success for helping
-    helper->setMotivation(helper->getMotivation() - (getMotivation() / 2));
-    helper->setSuccess(helper->getSuccess() + (getSuccess() / 2));
+    helper->setMotivation(helper->getMotivation() - getMotivationalCost());
+    helper->setSuccess(helper->getSuccess() + getSuccessAchieved());
     cout << helper->getName() << " motivates " << player->getName() << " by joining their activity" << endl;
 }
