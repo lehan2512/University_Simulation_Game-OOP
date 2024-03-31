@@ -12,6 +12,7 @@
 #include "CPlagiarismHearing.h"
 #include "CAccusedOfPlagiarism.h"
 #include "CSkipClasses.h"
+#include "CExtraCurricular.h"
 
 using namespace std;
 
@@ -80,6 +81,10 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
         // Check if type is 1, create CAssessment object
         if (type == 1) {
             spaceVector.push_back(make_shared<CAssessment>(type, name, info.motivation, info.success, info.year));
+        }
+        else if (type == 3)
+        {
+            spaceVector.push_back(make_shared<CExtraCurricular>(type, name, 100, 20));
         }
         else if (type == 6)
         {
@@ -175,6 +180,24 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                     }
 
                     assessmentSpace->perform(playerInSpace, helper);
+                }
+            }
+            else if (spaceType == 3)
+            {
+                shared_ptr<CExtraCurricular> extraCurricularSpace = dynamic_pointer_cast<CExtraCurricular>(spaceVector[currentPosition]);
+                if (extraCurricularSpace) {
+                    CPlayer* playerInSpace = playerVector[j].get();
+                    CPlayer* helper;
+                    if (j == 0)
+                    {
+                        helper = playerVector[1].get();
+                    }
+                    else
+                    {
+                        helper = playerVector[0].get();
+                    }
+
+                    extraCurricularSpace->perform(playerInSpace, helper);
                 }
             }
             else if (spaceType == 6)

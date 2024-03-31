@@ -36,6 +36,12 @@
     <ClCompile Include="CSkipClasses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CTask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CExtraCurricular.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CSpace.h">
@@ -54,6 +60,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CSkipClasses.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CExtraCurricular.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

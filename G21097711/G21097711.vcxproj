@@ -129,19 +129,23 @@
   <ItemGroup>
     <ClCompile Include="CAccusedOfPlagiarism.cpp" />
     <ClCompile Include="CAssessment.cpp" />
+    <ClCompile Include="CExtraCurricular.cpp" />
     <ClCompile Include="CPlagiarismHearing.cpp" />
     <ClCompile Include="CPlayer.cpp" />
     <ClCompile Include="CSkipClasses.cpp" />
     <ClCompile Include="CSpace.cpp" />
+    <ClCompile Include="CTask.cpp" />
     <ClCompile Include="G21097711.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAccusedOfPlagiarism.h" />
     <ClInclude Include="CAssessment.h" />
+    <ClInclude Include="CExtraCurricular.h" />
     <ClInclude Include="CPlagiarismHearing.h" />
     <ClInclude Include="CPlayer.h" />
     <ClInclude Include="CSkipClasses.h" />
     <ClInclude Include="CSpace.h" />
+    <ClInclude Include="CTask.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
