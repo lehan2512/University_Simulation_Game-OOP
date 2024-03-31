@@ -1,18 +1,20 @@
 #include <iostream>
+
 #include <fstream>
 #include <sstream>
+
 #include <vector>
-//#include <string>
 #include <memory>
-//#include <cctype>
-//#include <cstdlib>
+
 #include "CSpace.h"
 #include "CPlayer.h"
 #include "CAssessment.h"
+#include "CExtraCurricular.h"
+#include "CBonus.h"
+
 #include "CPlagiarismHearing.h"
 #include "CAccusedOfPlagiarism.h"
 #include "CSkipClasses.h"
-#include "CExtraCurricular.h"
 
 using namespace std;
 
@@ -92,22 +94,27 @@ void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& play
         if (type == 1) {
             spaceVector.push_back(make_shared<CAssessment>(type, name, info.motivationalCost, info.successAchieved, info.year));
         }
-        // Check if type is 1, create CExtraCurricular object
+        // Check if type is 3, create CExtraCurricular object
         else if (type == 3)
         {
             spaceVector.push_back(make_shared<CExtraCurricular>(type, name, info.motivationalCost, SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR));
         }
-        // Check if type is 1, create CPlagiarismHearing object
+        // Check if type is 4, create CBonus object
+        else if (type == 4)
+        {
+            spaceVector.push_back(make_shared<CBonus>(type, name));
+        }
+        // Check if type is 6, create CPlagiarismHearing object
         else if (type == 6)
         {
             spaceVector.push_back(make_shared<CPlagiarismHearing>(type, name));
         }
-        // Check if type is 1, create CAccusedOfPlagiarism object
+        // Check if type is 7, create CAccusedOfPlagiarism object
         else if (type == 7)
         {
             spaceVector.push_back(make_shared<CAccusedOfPlagiarism>(type, name, MOTIVATIONAL_COST_OF_ACCUSED_OF_PLAGIARISM));
         }
-        // Check if type is 1, create CSkipClasses object
+        // Check if type is 8, create CSkipClasses object
         else if (type == 8)
         {
             spaceVector.push_back(make_shared<CSkipClasses>(type, name));
@@ -136,6 +143,12 @@ int Random()
     return static_cast<int>(static_cast<double> (rand()) / (RAND_MAX + 1) * 10.0f + 1);
 }
 
+//FUNCTION FOR SPINNER
+static int spin()
+{
+    return Random();
+}
+
 // FIRST GAMEPLAY
 void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playerVector)
 {
@@ -157,10 +170,10 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
             int currentMotivation = playerVector[j]->getMotivation();
             int currentSuccess = playerVector[j]->getSuccess();
 
-            // Perform spin and change position
-            int spin = Random();
-            cout << playerName << " spins " << spin << endl;
-            currentPosition = currentPosition + spin;
+            int spinnedNumber = spin();
+            cout << playerName << " spins " << spinnedNumber
+                << endl;
+            currentPosition = currentPosition + spinnedNumber;
 
             // Effect if completed a year in current round
             if (currentPosition > 35)
@@ -222,6 +235,19 @@ void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playe
                     }
 
                     extraCurricularSpace->perform(playerInSpace, helper);
+                }
+            }
+            // Effect if player lands on an Extra-Curricular Activity space
+            else if (spaceType == 4)
+            {
+                // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CExtraCurricular 
+                // extraCurricularSpace point to that element
+                shared_ptr<CBonus> bonusSpace = dynamic_pointer_cast<CBonus>(spaceVector[currentPosition]);
+                if (bonusSpace) {
+
+                    //spin again
+                    int spinnedAgain = spin();
+                    bonusSpace->perform(playerVector[j].get(), spinnedAgain);
                 }
             }
             // Effect if player lands on an Plagiarism Hearing space

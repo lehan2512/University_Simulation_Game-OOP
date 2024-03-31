@@ -24,7 +24,7 @@ public:
     int getSuccessAchieved();
     bool getReceivedHelp();
     void setReceivedHelp(bool);
-    void outputMessage(CPlayer*);   // Output message for landing on the space
+    void outputMessage(CPlayer*) override;   // Output message for landing on the space overridden from CSpace
     virtual void perform(CPlayer*, CPlayer*);   // Perform changes to player attribute when landed on space
     virtual void playerOutput(CPlayer* player); // Player output after completing the task
     virtual void affectFriendForHelping(CPlayer*, CPlayer*);    // Perform changes to friend's attributes for helping
