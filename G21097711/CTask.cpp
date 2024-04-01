@@ -2,39 +2,102 @@
 #include "CSpace.h"
 #include <iostream>
 
-// Constructor for CTask overloaded by the attributes of constructor in CSpace
+/**
+ * @brief Constructor for CTask.
+ *
+ * This constructor initializes a CTask object with the given attributes, including
+ * the type, name, motivational cost, and success achieved.
+ *
+ * @param type The type of the space.
+ * @param name The name of the space.
+ * @param motivationalCost The motivational cost associated with the task.
+ * @param successAchieved The success achieved upon completing the task.
+ *
+ * @return None
+ */
 CTask::CTask(int type, const string& name, int motivationalCost, int successAchieved)
-	: CSpace(type, name), mMotivationalCost(motivationalCost), mSuccessAchieved(successAchieved), vyvyanCompleted(false), rickCompleted(false), receivedHelp(false) {}
+	: CSpace(type, name), mMotivationalCost(motivationalCost), mSuccessAchieved(successAchieved), vyvyanCompleted(false), rickCompleted(false), mReceivedHelp(false) {}
 
-// Function to show that player recieved help
+/**
+ * @brief Sets whether the player received help for the task.
+ *
+ * This function sets whether the player received help for the task.
+ *
+ * @param isFalse Flag indicating whether the player received help (true) or not (false).
+ *
+ * @return None
+ */
 void CTask::setReceivedHelp(bool isFalse)
 {
-    receivedHelp = isFalse;
+    mReceivedHelp = isFalse;
 }
 
-// Getter methods
+/**
+ * @brief Gets the motivational cost associated with the task.
+ *
+ * This function retrieves the motivational cost associated with the task.
+ *
+ * @param None
+ *
+ * @return The motivational cost associated with the task.
+ */
 int CTask::getMotivationalCost() {
     return mMotivationalCost;
 }
 
+/**
+ * @brief Gets the success achieved upon completing the task.
+ *
+ * This function retrieves the success achieved upon completing the task.
+ *
+ * @param None
+ *
+ * @return The success achieved upon completing the task.
+ */
 int CTask::getSuccessAchieved() {
     return mSuccessAchieved;
 }
 
-// Function to check if player revieved help
+/**
+ * @brief Checks whether the player received help for the task.
+ *
+ * This function checks whether the player received help for the task.
+ *
+ * @param None
+ *
+ * @return True if the player received help, false otherwise.
+ */
 bool CTask::getReceivedHelp()
 {
-    return receivedHelp;
+    return mReceivedHelp;
 }
 
-// Function to output message when player lands on a square
+/**
+  * @brief Outputs a message related to the task space.
+  *
+  * This function outputs a message indicating that a player has landed on the task space.
+  *
+  * @param player Pointer to the player object.
+  *
+  * @return None
+  */
 void CTask::outputMessage(CPlayer* player)
 {
     cout << player->getName() << " lands on " << mName << endl;
 }
 
-// Function to perform effects of assessment on player
-void CTask::perform(CPlayer* player, CPlayer* helper) {
+
+/**
+  * @brief Overridden function to Performs the task associated with the derived spaces.
+  *
+  * checking if the player has enough motivationto complete the task, updating player attributes accordingly,
+  * and keeping track of which player has completed the task.
+  *
+  * @param player Pointer to the player object.
+  *
+  * @return None
+  */
+void CTask::perform(CPlayer* player) {
     int playerIndex = -1; // Index of the player who landed on the assessment
 
     // Determine the player's index (0 for Vyvyan, 1 for Rick) to keep track of which player is currently on the space
@@ -71,6 +134,7 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
             //reduce the motivational cost and success achieved from the task so that when another player comes to this task, they receive half and helper receives half
             mMotivationalCost = mMotivationalCost / 2;
             mSuccessAchieved = mSuccessAchieved / 2;
+            mWhoCompleted.push_back(player);
         }
         else
         {
@@ -98,12 +162,12 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
             {
                 rickCompleted = true;
             }
-            receivedHelp = true;
+            mReceivedHelp = true;
 
             playerOutput(player);
 
             //Friend's attributes are affected as he helped
-            affectFriendForHelping(player, helper);
+            affectFriendForHelping(player);
         }
     }
     else
@@ -112,7 +176,27 @@ void CTask::perform(CPlayer* player, CPlayer* helper) {
     }
 }
 
+/**
+ * @brief Outputs player information after completing the task.
+ *
+ * This function is virtual and overridden by derived classes to customize player output
+ * after completing the task.
+ *
+ * @param player Pointer to the player object.
+ *
+ * @return None
+ */
 void CTask::playerOutput(CPlayer* player) {} // As mentioned in header file this function is to be overrridden in derived classes
 
-void CTask::affectFriendForHelping(CPlayer*, CPlayer*) {} // As mentioned in header file this function is to be overrridden in derived classes
+/**
+ * @brief Performs changes to the friend's attributes for helping.
+ *
+ * This function is virtual and intended to be overridden by derived classes to customize
+ * changes to the friend's attributes for helping.
+ *
+ * @param player Pointer to the player object.
+ *
+ * @return None
+ */
+void CTask::affectFriendForHelping(CPlayer*) {} // As mentioned in header file this function is to be overrridden in derived classes
 

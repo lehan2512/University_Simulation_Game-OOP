@@ -1,8 +1,31 @@
 #include "CBonus.h"
 #include <iostream>
 
+/**
+ * @brief Constructor for CBonus.
+ *
+ * This constructor initializes a CBonus object with the given attributes, including
+ * the type and name.
+ *
+ * @param type The type of the space.
+ * @param name The name of the space.
+ *
+ * @return None
+ */
 CBonus::CBonus(int type, const string& name) : CBonusBogusManager(type, name) {}
 
+/**
+ * @brief Perform the action associated with the Bonus space.
+ *
+ * This function performs the action associated with landing on the Bonus space,
+ * based on the spin result. It updates the player's motivation accordingly and
+ * outputs a message describing the action and the motivation gained.
+ *
+ * @param player Pointer to the player object.
+ * @param spin The value obtained from spinning.
+ *
+ * @return None
+ */
 void CBonus::perform(CPlayer* player, int spin)
 {
     cout << player->getName() << " lands on Bonus" << endl;
@@ -53,6 +76,17 @@ void CBonus::perform(CPlayer* player, int spin)
     }
 }
 
+/**
+ * @brief Output a message and the player's motivation after landing on the Bonus space.
+ *
+ * This function outputs the provided message and the player's current motivation after
+ * landing on the Bonus space.
+ *
+ * @param player Pointer to the player object.
+ * @param message The message to be displayed.
+ *
+ * @return None
+ */
 void CBonus::outputMessage(CPlayer* player, const string& message)
 {
     cout << message << endl;

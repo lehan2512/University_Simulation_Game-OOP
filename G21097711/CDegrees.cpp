@@ -23,18 +23,60 @@ typedef vector<shared_ptr<CSpace>> SpaceVector;
 // Typedef for vector of shared pointers to players
 typedef vector<shared_ptr<CPlayer>> PlayerVector;
 
+
+/**
+ * @brief Default constructor for the CDegrees class.
+ *
+ * This constructor initializes a CDegrees object.
+ *
+ * @param None
+ *
+ * @return None
+ */
 CDegrees::CDegrees() {}
 
+
+/**
+ * @brief Default destructor for the CDegrees class.
+ *
+ * This destructor cleans up resources associated with a CDegrees object.
+ *
+ * @param None
+ *
+ * @return None
+ */
 CDegrees::~CDegrees() {}
 
+
+/**
+ * @brief Executes the entire game.
+ *
+ * This function executes the entire game by first initializing the game using the gameInitialization()
+ * function and then simulating the gameplay using the gameplay() function.
+ *
+ * @param None
+ *
+ * @return None
+ */
 void CDegrees::playGame() {
     gameInitialization();
     gameplay();
 }
 
 
-// GAME INITIALIZATION
-//Extracts information from degrees.txt file, creates spaces, creates players, set position of players to first space and output welcome message
+/**
+ * @brief Initializes the game by reading data from a file and creating game spaces and players.
+ *
+ * This function reads data from a file "degrees.txt" to initialize the game spaces. Each line of the
+ * file represents a different space in the game. The function parses each line to determine the type
+ * of space and its characteristics, such as name, motivational cost, success achieved, and year (if applicable).
+ * It then creates the corresponding space objects and adds them to the game space vector.
+ * Additionally, it creates two player objects and adds them to the player vector.
+ *
+ * @param[in] None
+ *
+ * @return None
+ */
 void CDegrees::gameInitialization() {
 const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
     const int MOTIVATIONAL_COST_OF_ACCUSED_OF_PLAGIARISM = 50;
@@ -140,6 +182,19 @@ const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
     playerVector[1]->setPosition(0);
 }
 
+
+/**
+ * @brief Simulates the gameplay for the degrees game.
+ *
+ * This function simulates the gameplay for the degrees game. It executes 20 rounds, each consisting of
+ * turns for two players. It simulates the movement of players on the game board, handles effects of
+ * landing on different types of spaces, and updates player attributes accordingly. At the end of the
+ * simulation, it outputs the final scores and declares the winner.
+ *
+ * @param None
+ *
+ * @return None
+ */
 void CDegrees::gameplay() {
     //seed
     srand(48);
@@ -222,7 +277,7 @@ void CDegrees::gameplay() {
                         helper = playerVector[0].get();
                     }
 
-                    assessmentSpace->perform(playerInSpace, helper);
+                    assessmentSpace->perform(playerInSpace);
                 }
             }
             // Effect if player lands on an Extra-Curricular Activity space
@@ -243,7 +298,7 @@ void CDegrees::gameplay() {
                         helper = playerVector[0].get();
                     }
 
-                    extraCurricularSpace->perform(playerInSpace, helper);
+                    extraCurricularSpace->perform(playerInSpace);
                 }
             }
             // Effect if player lands on an Bonus space
@@ -345,14 +400,29 @@ void CDegrees::gameplay() {
     cout << endl << winner << " wins!" << endl;
 }
 
-// FUNCTION TO GENERATE A RANDOM INTEGER
-// notice that I am using casting to convert one data type to another
+/**
+ * @brief Generates a random integer between 1 and 10.
+ *
+ * This function generates a random integer between 1 and 10 using the rand() function.
+ *
+ * @param None
+ *
+ * @return Random integer between 1 and 10
+ */
 int CDegrees::Random() {
     return static_cast<int>(static_cast<double>(rand()) / (RAND_MAX + 1) * 10.0f + 1);
 }
 
-//FUNCTION FOR SPINNER
-
+/**
+ * @brief Simulates spinning a wheel.
+ *
+ * This function simulates spinning a wheel by calling the Random() function
+ * to generate a random integer between 1 and 10.
+ *
+ * @param None
+ *
+ * @return Random integer between 1 and 10
+ */
 int CDegrees::spin() {
     return Random();
 }
