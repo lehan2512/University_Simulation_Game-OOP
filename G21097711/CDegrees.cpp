@@ -1,7 +1,9 @@
 #include "CDegrees.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 #include <cstdlib> // For srand and rand
 #include <ctime>   // For time
 
@@ -14,6 +16,12 @@
 #include "CSkipClasses.h"
 
 using namespace std;
+
+// Typedef for vector of shared pointers to spaces
+typedef vector<shared_ptr<CSpace>> SpaceVector;
+
+// Typedef for vector of shared pointers to players
+typedef vector<shared_ptr<CPlayer>> PlayerVector;
 
 CDegrees::CDegrees() {}
 
@@ -241,6 +249,7 @@ void CDegrees::gameplay() {
             // Effect if player lands on an Bonus space
             else if (spaceType == 4)
             {
+
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CBonus 
                 // bonusSpace point to that element
                 shared_ptr<CBonus> bonusSpace = dynamic_pointer_cast<CBonus>(spaceVector[currentPosition]);
@@ -282,8 +291,7 @@ void CDegrees::gameplay() {
                 shared_ptr<CAccusedOfPlagiarism> accusedOfPlagiarismSpace = dynamic_pointer_cast<CAccusedOfPlagiarism>(spaceVector[currentPosition]);
                 if (accusedOfPlagiarismSpace)
                 {
-                    const int INDEX_OF_PLAGIARISM_HEARING_SPACE_ON_BOARD = 32;
-                    accusedOfPlagiarismSpace->perform(playerVector[j].get(), INDEX_OF_PLAGIARISM_HEARING_SPACE_ON_BOARD);
+                    accusedOfPlagiarismSpace->perform(playerVector[j].get());
                 }
             }
             // Effect if player lands on an Skip Classes space
@@ -349,15 +357,4 @@ int CDegrees::spin() {
     return Random();
 }
 
-
-/*void gameInitialization(vector<CSpacePtr>& spaceVector, vector<CPlayerPtr>& playerVector)
-{
-    
-}
-
-// FIRST GAMEPLAY
-void gameplay(vector<shared_ptr<CSpace>>& spaceVector, vector<CPlayerPtr>& playerVector)
-{
-    
-}*/
 

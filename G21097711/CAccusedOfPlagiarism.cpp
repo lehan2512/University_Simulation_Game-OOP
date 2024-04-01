@@ -12,10 +12,11 @@ void CAccusedOfPlagiarism::outputMessage(CPlayer* player)
 }
 
 // Overridden Function to perform changes to player attributes in this space
-void CAccusedOfPlagiarism::perform(CPlayer* player, int indexOfPlagiarismHearing)
+void CAccusedOfPlagiarism::perform(CPlayer* player)
 {
+	const int positionOfPlagiarismHearing = 32;
 	// Set player position to Plagerism Hearing and reduction motivation
-	player->setPosition(indexOfPlagiarismHearing);
+	player->setPosition(positionOfPlagiarismHearing);
 	player->setMotivation(player->getMotivation() - mMotivationalCost);
 	outputMessage(player);
 }

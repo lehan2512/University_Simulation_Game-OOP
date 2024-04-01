@@ -5,9 +5,9 @@
 
 int main()
 {
-    CDegrees degreesGame; // Create an instance of the CDegrees class
-    degreesGame.playGame(); // Call the playGame function to start the game
+    CDegrees degreesGame; // Creating an instance of CDegrees class
+    degreesGame.playGame(); // Calling playGame function to start the game
     
     return 0;
-    _CrtDumpMemoryLeaks();
+    _CrtDumpMemoryLeaks();  // Detecting memory leaks if any
 }

@@ -18,8 +18,6 @@ protected: // Left these two bools as protected so that they can be accessed by 
 
 public:
     CTask(int type, const string& name, int motivationalCost, int successAchieved); // overloading is done implicitly
-    void setMotivationalCost(int motivationalCost);
-    void setSuccessAchieved(int successAchieved);
     int getMotivationalCost();
     int getSuccessAchieved();
     bool getReceivedHelp();
@@ -28,6 +26,5 @@ public:
     virtual void perform(CPlayer*, CPlayer*);   // Perform changes to player attribute when landed on space
     virtual void playerOutput(CPlayer* player); // Player output after completing the task
     virtual void affectFriendForHelping(CPlayer*, CPlayer*);    // Perform changes to friend's attributes for helping
-    void addToCompletedTasks(CPlayer*, int assessmentYear); // When task is completed, increments completed tasks of that year
 };
 

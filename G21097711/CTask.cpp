@@ -116,7 +116,3 @@ void CTask::playerOutput(CPlayer* player) {} // As mentioned in header file this
 
 void CTask::affectFriendForHelping(CPlayer*, CPlayer*) {} // As mentioned in header file this function is to be overrridden in derived classes
 
-/*void CTask::addToCompletedTasks(CPlayer* player)
-{
-    
-}*/

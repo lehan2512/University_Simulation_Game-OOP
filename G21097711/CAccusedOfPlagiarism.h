@@ -10,6 +10,6 @@ private:
 public:
     CAccusedOfPlagiarism(int type, const string& name, int motivationalCost);
     void outputMessage(CPlayer*) override;
-    void perform(CPlayer*, int);
+    void perform(CPlayer*) override;
 };
 
