@@ -58,9 +58,9 @@ CDegrees::~CDegrees() {}
  *
  * @return None
  */
-void CDegrees::playGame() {
-    gameInitialization();
-    gameplay();
+void CDegrees::PlayGame() {
+    GameInitialization();
+    Gameplay();
 }
 
 
@@ -77,7 +77,7 @@ void CDegrees::playGame() {
  *
  * @return None
  */
-void CDegrees::gameInitialization() {
+void CDegrees::GameInitialization() {
 const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
     const int MOTIVATIONAL_COST_OF_ACCUSED_OF_PLAGIARISM = 50;
 
@@ -195,14 +195,18 @@ const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
  *
  * @return None
  */
-void CDegrees::gameplay() {
+void CDegrees::Gameplay() {
+    mGameWon = false;
     //seed
     srand(48);
 
-    // Play 20 rounds in iteration
-    for (int i = 0; i < 20; i++)
+    int round = 0;
+
+    // Play in iteration till game is won
+    while (!mGameWon)
     {
-        cout << "ROUND " << i + 1 << endl;
+        round += 1;
+        cout << "ROUND " << round << endl;
         cout << "=========" << endl;
 
         // iterate two players in each round
@@ -217,9 +221,8 @@ void CDegrees::gameplay() {
             int yearTwoTasksCompleted = playerVector[j]->getYearTwoTasks();
             int yearThreeTasksCompleted = playerVector[j]->getYearThreeTasks();
 
-            int spinnedNumber = spin();
-            cout << playerName << " spins " << spinnedNumber
-                << endl;
+            int spinnedNumber = Spin();
+            cout << playerName << " spins " << spinnedNumber << endl;
             currentPosition = currentPosition + spinnedNumber;
 
             // Effect if completed a year in current round
@@ -240,9 +243,14 @@ void CDegrees::gameplay() {
                 }
                 else if ((currentYear == 3 && yearThreeTasksCompleted == 3))
                 {
-                    cout << playerName << " has completed the degree..." << endl;
-                    cout << "Congratulations " << playerName << "!" << endl;
-                    cout << "You have graduated from Scumbag University!" << endl;
+                    cout << playerName << " has successfully completed Year 3" << endl;
+                    cout << "Congratulations to " << playerName << " on their Graduation Day!" << endl;
+                    cout << "Game Over" << endl;
+                    cout << "=========" << endl << endl;
+                    cout << playerName << " wins!";
+
+                    mGameWon = true;
+                    break;
                 }
                 else
                 {
@@ -266,18 +274,8 @@ void CDegrees::gameplay() {
                 // AssessmentSpace point to that element
                 shared_ptr<CAssessment> assessmentSpace = dynamic_pointer_cast<CAssessment>(spaceVector[currentPosition]);
                 if (assessmentSpace) {
-                    CPlayer* playerInSpace = playerVector[j].get();
-                    CPlayer* helper;
-                    if (j == 0)
-                    {
-                        helper = playerVector[1].get();
-                    }
-                    else
-                    {
-                        helper = playerVector[0].get();
-                    }
-
-                    assessmentSpace->perform(playerInSpace);
+                    CPlayer* pPlayerInSpace = playerVector[j].get();
+                    assessmentSpace->perform(pPlayerInSpace);
                 }
             }
             // Effect if player lands on an Extra-Curricular Activity space
@@ -287,31 +285,20 @@ void CDegrees::gameplay() {
                 // extraCurricularSpace point to that element
                 shared_ptr<CExtraCurricular> extraCurricularSpace = dynamic_pointer_cast<CExtraCurricular>(spaceVector[currentPosition]);
                 if (extraCurricularSpace) {
-                    CPlayer* playerInSpace = playerVector[j].get();
-                    CPlayer* helper;
-                    if (j == 0)
-                    {
-                        helper = playerVector[1].get();
-                    }
-                    else
-                    {
-                        helper = playerVector[0].get();
-                    }
-
-                    extraCurricularSpace->perform(playerInSpace);
+                    CPlayer* pPlayerInSpace = playerVector[j].get();
+                    extraCurricularSpace->perform(pPlayerInSpace);
                 }
             }
             // Effect if player lands on an Bonus space
             else if (spaceType == 4)
             {
-
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CBonus 
                 // bonusSpace point to that element
                 shared_ptr<CBonus> bonusSpace = dynamic_pointer_cast<CBonus>(spaceVector[currentPosition]);
                 if (bonusSpace) {
 
                     //spin again
-                    int spinnedAgain = spin();
+                    int spinnedAgain = Spin();
                     bonusSpace->perform(playerVector[j].get(), spinnedAgain);
                 }
             }
@@ -323,7 +310,7 @@ void CDegrees::gameplay() {
                 shared_ptr<CBogus> bogusSpace = dynamic_pointer_cast<CBogus>(spaceVector[currentPosition]);
                 if (bogusSpace) {
                     //spin again
-                    int spinnedAgain = spin();
+                    int spinnedAgain = Spin();
                     bogusSpace->perform(playerVector[j].get(), spinnedAgain);
                 }
             }
@@ -373,31 +360,6 @@ void CDegrees::gameplay() {
             cout << playerName << "'s motivation is " << currentMotivation << " and success is " << currentSuccess << endl << endl;
         }
     }
-
-    cout << "Game Over" << endl;
-    cout << "=========" << endl;
-
-    // Output scores
-    string nameOfVyvyan = playerVector[0]->getName();
-    int successOfVyvyan = playerVector[0]->getSuccess();
-
-    string nameOfRick = playerVector[1]->getName();
-    int successOfRick = playerVector[1]->getSuccess();
-
-    cout << nameOfVyvyan << " has achieved " << successOfVyvyan << endl;
-    cout << nameOfRick << " has achieved " << successOfRick << endl;
-
-    // Output winner
-    string winner;
-    if (successOfVyvyan > successOfRick)
-    {
-        winner = nameOfVyvyan;
-    }
-    else
-    {
-        winner = nameOfRick;
-    }
-    cout << endl << winner << " wins!" << endl;
 }
 
 /**
@@ -423,8 +385,6 @@ int CDegrees::Random() {
  *
  * @return Random integer between 1 and 10
  */
-int CDegrees::spin() {
+int CDegrees::Spin() {
     return Random();
 }
-
-

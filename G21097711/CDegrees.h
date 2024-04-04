@@ -8,17 +8,18 @@
 // Degrees game mamager class
 class CDegrees {
 private:
+    bool mGameWon;
     std::vector<std::shared_ptr<CSpace>> spaceVector;
     std::vector<std::shared_ptr<CPlayer>> playerVector;
-    void gameInitialization();
-    void gameplay();
+    void GameInitialization();
+    void Gameplay();
     int Random();
-    int spin();
+    int Spin();
 
 public:
     CDegrees();
     ~CDegrees();
-    void playGame();
+    void PlayGame();
 };
 
 
