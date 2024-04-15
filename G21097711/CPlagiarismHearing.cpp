@@ -13,7 +13,7 @@
  *
  * @return None
  */
-CPlagiarismHearing::CPlagiarismHearing(int type, const string& name): 
+CPlagiarismHearing::CPlagiarismHearing( int type, const string& name ): 
 	CSpace(type, name) {}
 
 
@@ -26,9 +26,9 @@ CPlagiarismHearing::CPlagiarismHearing(int type, const string& name):
  *
  * @return None
  */
-void CPlagiarismHearing::outputMessage(CPlayer* player)
+void CPlagiarismHearing::GetOutputMessage( CPlayer* player )
 {
-	cout << player->getName() << " lands on Plagiarism Hearing and supports their friend" << endl;
+	cout << player->GetName() << " lands on Plagiarism Hearing and supports their friend" << endl;
 }
 
 
@@ -43,8 +43,8 @@ void CPlagiarismHearing::outputMessage(CPlayer* player)
  *
  * @return None
  */
-void CPlagiarismHearing::perform(CPlayer* player)
+void CPlagiarismHearing::PerformTask( CPlayer* player )
 {
-	outputMessage(player);
+	GetOutputMessage(player);
 }
 

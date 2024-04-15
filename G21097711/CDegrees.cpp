@@ -58,7 +58,8 @@ CDegrees::~CDegrees() {}
  *
  * @return None
  */
-void CDegrees::PlayGame() {
+void CDegrees::PlayGame() 
+{
     GameInitialization();
     Gameplay();
 }
@@ -77,44 +78,47 @@ void CDegrees::PlayGame() {
  *
  * @return None
  */
-void CDegrees::GameInitialization() {
-const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
-    const int MOTIVATIONAL_COST_OF_ACCUSED_OF_PLAGIARISM = 50;
+void CDegrees::GameInitialization() 
+{
+    const int kSuccessAchievedForExtraCurricular = 20;
+    const int kMotivationalCostForAccusedOfPlagiarism = 50;
 
     // Open degrees file
-    ifstream file("degrees.txt");
+    ifstream file( "degrees.txt" );
     if (!file)
     {
         cerr << "Error: Unable to open the file degrees.txt" << endl;
         return;
     }
 
-    //Take line by line from the text file
+    //Taking line by line from the text file
     string line;
-    while (getline(file, line))
+    while ( getline( file, line ) )
     {
-        stringstream ss(line);
+        stringstream ss( line );
 
-        int spaceType;
-        string spaceName;
-        int motivationalCost;
-        int successAchieved;
-        int year;
+        int spaceType = 0;
+        string spaceName = "";
+        int motivationalCost = 0;
+        int successAchieved = 0;
+        int year = 0;
 
         ss >> spaceType >> ws; // Extract type and skip leading whitespace
 
         string word;
         // Extract name
-        while (ss >> word) {
-            if (isdigit(word[0])) break; // If word starts with a digit, break
-            if (!spaceName.empty()) spaceName += " "; // Add space if name is not empty
+        while ( ss >> word ) 
+        {
+            if ( isdigit( word[0] ) ) break; // If word starts with a digit, break
+            if ( !spaceName.empty() ) spaceName += " "; // Add space if name is not empty
             spaceName += word;
         }
 
         // If space type is 1(Assessment), extract motivational motivational cost, success achieved and year
-        if (spaceType == 1) {
+        if ( spaceType == 1 ) 
+        {
             // Extract motivational cost
-            motivationalCost = stoi(word);
+            motivationalCost = stoi( word );
 
             // Extract success score
             ss >> successAchieved;
@@ -123,63 +127,65 @@ const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
             ss >> year;
         }
         // If type is 3(Extra-Curricular Activity), extract motivational cost
-        else if (spaceType == 3)
+        else if ( spaceType == 3 )
         {
             // Extract motivational cost
-            motivationalCost = stoi(word);
+            motivationalCost = stoi( word );
         }
         else {}
 
 
         // Check if type is 1, create CAssessment object
-        if (spaceType == 1) {
-            spaceVector.push_back(make_shared<CAssessment>(spaceType, spaceName, motivationalCost, successAchieved, year));
+        if (spaceType == 1) 
+        {
+            spaceVector.push_back( make_shared<CAssessment>( spaceType, spaceName, motivationalCost, successAchieved, year ) );
         }
         // Check if type is 3, create CExtraCurricular object
-        else if (spaceType == 3)
+        else if ( spaceType == 3 )
         {
-            spaceVector.push_back(make_shared<CExtraCurricular>(spaceType, spaceName, motivationalCost, SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR));
+            spaceVector.push_back( make_shared<CExtraCurricular>( spaceType, spaceName, motivationalCost, kSuccessAchievedForExtraCurricular) );
         }
         // Check if type is 4, create CBonus object
-        else if (spaceType == 4)
+        else if ( spaceType == 4 )
         {
-            spaceVector.push_back(make_shared<CBonus>(spaceType, spaceName));
+            spaceVector.push_back( make_shared<CBonus>( spaceType, spaceName ) );
         }
         // Check if type is 5, create CBogus object
-        else if (spaceType == 5)
+        else if ( spaceType == 5 )
         {
-            spaceVector.push_back(make_shared<CBogus>(spaceType, spaceName));
+            spaceVector.push_back( make_shared<CBogus>( spaceType, spaceName ) );
         }
         // Check if type is 6, create CPlagiarismHearing object 
-        else if (spaceType == 6)
+        else if ( spaceType == 6 )
         {
-            spaceVector.push_back(make_shared<CPlagiarismHearing>(spaceType, spaceName));
+            spaceVector.push_back( make_shared<CPlagiarismHearing>( spaceType, spaceName ) );
         }
         // Check if type is 7, create CAccusedOfPlagiarism object
-        else if (spaceType == 7)
+        else if ( spaceType == 7 )
         {
-            spaceVector.push_back(make_shared<CAccusedOfPlagiarism>(spaceType, spaceName, MOTIVATIONAL_COST_OF_ACCUSED_OF_PLAGIARISM));
+            spaceVector.push_back( make_shared<CAccusedOfPlagiarism>( spaceType, spaceName, kMotivationalCostForAccusedOfPlagiarism) );
         }
         // Check if type is 8, create CSkipClasses object
-        else if (spaceType == 8)
+        else if ( spaceType == 8 )
         {
-            spaceVector.push_back(make_shared<CSkipClasses>(spaceType, spaceName));
+            spaceVector.push_back( make_shared<CSkipClasses>( spaceType, spaceName ) );
         }
         // Create a CSpace object for other spaces
-        else {
-            spaceVector.push_back(make_shared<CSpace>(spaceType, spaceName));
+        else 
+        {
+            spaceVector.push_back( make_shared<CSpace>( spaceType, spaceName ) );
         }
     }
 
     // Creating first two players and adding to the PlayerVector
-    playerVector.push_back(make_shared<CPlayer>("Vyvyan"));
-    playerVector.push_back(make_shared<CPlayer>("Rick"));
+    playerVector.push_back( make_shared<CPlayer>( "Vyvyan" ) );
+    playerVector.push_back( make_shared<CPlayer>( "Rick" ) );
 
     cout << "Welcome to Scumbag College" << endl << endl;
 
     // Set player position to first space(welcome week)
-    playerVector[0]->setPosition(0);
-    playerVector[1]->setPosition(0);
+    playerVector[0]->SetPosition(0);
+    playerVector[1]->SetPosition(0);
 }
 
 
@@ -195,53 +201,59 @@ const int SUCCESS_ACHIEVED_FROM_EXTRA_CURRICULAR = 20;
  *
  * @return None
  */
-void CDegrees::Gameplay() {
+void CDegrees::Gameplay() 
+{
+    const int kTotalNumOfPlayers = 2;
+    const int kTotalNumOfSpaces = 36;
+    const int kMaxTasksPerYear = 3;
+    const int kMotivationGainedForNewYear = 250;
     mGameWon = false;
+
     //seed
     srand(48);
 
     int round = 0;
 
     // Play in iteration till game is won
-    while (!mGameWon)
+    while ( !mGameWon )
     {
         round += 1;
         cout << "ROUND " << round << endl;
         cout << "=========" << endl;
 
         // iterate two players in each round
-        for (int j = 0; j < 2; j++)
+        for ( int j = 0; j < kTotalNumOfPlayers; j++ )
         {
-            string playerName = playerVector[j]->getName();
-            int currentPosition = playerVector[j]->getPosition();
-            int currentYear = playerVector[j]->getYear();
-            int currentMotivation = playerVector[j]->getMotivation();
-            int currentSuccess = playerVector[j]->getSuccess();
-            int yearOneTasksCompleted = playerVector[j]->getYearOneTasks();
-            int yearTwoTasksCompleted = playerVector[j]->getYearTwoTasks();
-            int yearThreeTasksCompleted = playerVector[j]->getYearThreeTasks();
+            string playerName = playerVector[j]->GetName();
+            int currentPosition = playerVector[j]->GetPosition();
+            int currentYear = playerVector[j]->GetYear();
+            int currentMotivation = playerVector[j]->GetMotivation();
+            int currentSuccess = playerVector[j]->GetSuccess();
+            int yearOneTasksCompleted = playerVector[j]->GetYearOneTasksCompleted();
+            int yearTwoTasksCompleted = playerVector[j]->GetYearTwoTasksCompleted();
+            int yearThreeTasksCompleted = playerVector[j]->GetYearThreeTasksCompleted();
 
             int spinnedNumber = Spin();
             cout << playerName << " spins " << spinnedNumber << endl;
             currentPosition = currentPosition + spinnedNumber;
 
             // Effect if completed a year in current round
-            if (currentPosition > 35)
+            if ( currentPosition >= kTotalNumOfSpaces )
             {
-                currentPosition -= 36;
+                currentPosition -= kTotalNumOfSpaces;
 
-                if ((currentYear == 1 && yearOneTasksCompleted == 3) || (currentYear == 2 && yearTwoTasksCompleted == 3))
+                if ( ( currentYear == 1 && yearOneTasksCompleted == kMaxTasksPerYear ) || ( currentYear == 2 && yearTwoTasksCompleted == kMaxTasksPerYear ) )
                 {
                     currentYear += 1;
-                    currentMotivation += 250;
+                    currentMotivation += kMotivationGainedForNewYear;
 
-                    playerVector[j]->setYear(currentYear);
-                    playerVector[j]->setMotivation(currentMotivation);
-                    playerVector[j]->setYear(currentYear);
+                    playerVector[j]->SetYear( currentYear );
+                    playerVector[j]->SetMotivation( currentMotivation );
+                    playerVector[j]->SetYear( currentYear );
 
                     cout << playerName << " attends Welcome Week and starts year " << currentYear << " more motivated" << endl;
                 }
-                else if ((currentYear == 3 && yearThreeTasksCompleted == 3))
+                else if ( currentYear == 3 && yearThreeTasksCompleted == kMaxTasksPerYear )
                 {
                     cout << playerName << " has successfully completed Year 3" << endl;
                     cout << "Congratulations to " << playerName << " on their Graduation Day!" << endl;
@@ -254,52 +266,55 @@ void CDegrees::Gameplay() {
                 }
                 else
                 {
-                    currentMotivation += 250;
-                    playerVector[j]->setMotivation(currentMotivation);
+                    currentMotivation += kMotivationGainedForNewYear;
+                    playerVector[j]->SetMotivation( currentMotivation );
 
                     cout << playerName << " attends Welcome Week and starts " << currentYear << " again" << endl;
                 }
             }
 
-            playerVector[j]->setPosition(currentPosition);
+            playerVector[j]->SetPosition( currentPosition );
 
             // Getting details of the space
-            int spaceType = spaceVector[currentPosition]->getType();
-            string spaceName = spaceVector[currentPosition]->getName();
+            int spaceType = spaceVector[currentPosition]->GetType();
+            string spaceName = spaceVector[currentPosition]->GetName();
 
             // Effect if player lands on an Assessment space
-            if (spaceType == 1)
+            if ( spaceType == 1 )
             {
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CAssessment. 
                 // AssessmentSpace point to that element
-                shared_ptr<CAssessment> assessmentSpace = dynamic_pointer_cast<CAssessment>(spaceVector[currentPosition]);
-                if (assessmentSpace) {
+                shared_ptr<CAssessment> assessmentSpace = dynamic_pointer_cast<CAssessment>( spaceVector[currentPosition] );
+                if ( assessmentSpace )
+                {
                     CPlayer* pPlayerInSpace = playerVector[j].get();
-                    assessmentSpace->perform(pPlayerInSpace);
+                    assessmentSpace->PerformTask(pPlayerInSpace);
                 }
             }
             // Effect if player lands on an Extra-Curricular Activity space
-            else if (spaceType == 3)
+            else if ( spaceType == 3 )
             {
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CExtraCurricular 
                 // extraCurricularSpace point to that element
-                shared_ptr<CExtraCurricular> extraCurricularSpace = dynamic_pointer_cast<CExtraCurricular>(spaceVector[currentPosition]);
-                if (extraCurricularSpace) {
+                shared_ptr<CExtraCurricular> extraCurricularSpace = dynamic_pointer_cast<CExtraCurricular>( spaceVector[currentPosition] );
+                if ( extraCurricularSpace ) 
+                {
                     CPlayer* pPlayerInSpace = playerVector[j].get();
-                    extraCurricularSpace->perform(pPlayerInSpace);
+                    extraCurricularSpace->PerformTask( pPlayerInSpace );
                 }
             }
             // Effect if player lands on an Bonus space
-            else if (spaceType == 4)
+            else if ( spaceType == 4 )
             {
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CBonus 
                 // bonusSpace point to that element
-                shared_ptr<CBonus> bonusSpace = dynamic_pointer_cast<CBonus>(spaceVector[currentPosition]);
-                if (bonusSpace) {
+                shared_ptr<CBonus> bonusSpace = dynamic_pointer_cast<CBonus>( spaceVector[currentPosition] );
+                if ( bonusSpace ) 
+                {
 
                     //spin again
                     int spinnedAgain = Spin();
-                    bonusSpace->perform(playerVector[j].get(), spinnedAgain);
+                    bonusSpace->PerformTask( playerVector[j].get(), spinnedAgain );
                 }
             }
             // Effect if player lands on an Bogus space
@@ -307,44 +322,45 @@ void CDegrees::Gameplay() {
             {
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CBogus 
                 // bogusSpace point to that element
-                shared_ptr<CBogus> bogusSpace = dynamic_pointer_cast<CBogus>(spaceVector[currentPosition]);
-                if (bogusSpace) {
+                shared_ptr<CBogus> bogusSpace = dynamic_pointer_cast<CBogus>( spaceVector[currentPosition] );
+                if ( bogusSpace )
+                {
                     //spin again
                     int spinnedAgain = Spin();
-                    bogusSpace->perform(playerVector[j].get(), spinnedAgain);
+                    bogusSpace->PerformTask( playerVector[j].get(), spinnedAgain );
                 }
             }
             // Effect if player lands on an Plagiarism Hearing space
-            else if (spaceType == 6)
+            else if ( spaceType == 6 )
             {
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CPlagiarismHearing 
                 // plagiarismHearingSpace point to that element
-                shared_ptr<CPlagiarismHearing> plagiarismHearingSpace = dynamic_pointer_cast<CPlagiarismHearing>(spaceVector[currentPosition]);
-                if (plagiarismHearingSpace)
+                shared_ptr<CPlagiarismHearing> plagiarismHearingSpace = dynamic_pointer_cast<CPlagiarismHearing>( spaceVector[currentPosition] );
+                if ( plagiarismHearingSpace )
                 {
-                    plagiarismHearingSpace->perform(playerVector[j].get());
+                    plagiarismHearingSpace->PerformTask( playerVector[j].get() );
                 }
             }
             // Effect if player lands on an Accused of Plagiarism space
-            else if (spaceType == 7)
+            else if ( spaceType == 7 )
             {
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CAccusedOfPlagiarism 
                 // accusedOfPlagiarismSpace point to that element
-                shared_ptr<CAccusedOfPlagiarism> accusedOfPlagiarismSpace = dynamic_pointer_cast<CAccusedOfPlagiarism>(spaceVector[currentPosition]);
-                if (accusedOfPlagiarismSpace)
+                shared_ptr<CAccusedOfPlagiarism> accusedOfPlagiarismSpace = dynamic_pointer_cast<CAccusedOfPlagiarism>( spaceVector[currentPosition] );
+                if ( accusedOfPlagiarismSpace )
                 {
-                    accusedOfPlagiarismSpace->perform(playerVector[j].get());
+                    accusedOfPlagiarismSpace->PerformTask( playerVector[j].get() );
                 }
             }
             // Effect if player lands on an Skip Classes space
-            else if (spaceType == 8)
+            else if ( spaceType == 8 )
             {
                 // Cast the object at the currentPosition index of the spaceVector into a shared_ptr of type CSkipClasses 
                 // skipClassesSpace point to that element
-                shared_ptr<CSkipClasses> skipClassesSpace = dynamic_pointer_cast<CSkipClasses>(spaceVector[currentPosition]);
-                if (skipClassesSpace)
+                shared_ptr<CSkipClasses> skipClassesSpace = dynamic_pointer_cast<CSkipClasses>( spaceVector[currentPosition] );
+                if ( skipClassesSpace )
                 {
-                    skipClassesSpace->perform(playerVector[j].get());
+                    skipClassesSpace->PerformTask(playerVector[j].get());
                 }
             }
             // Effect if player lands on an other spaces
@@ -355,8 +371,8 @@ void CDegrees::Gameplay() {
             }
 
             // Output the player's motivation and success after each turn
-            currentMotivation = playerVector[j]->getMotivation();
-            currentSuccess = playerVector[j]->getSuccess();
+            currentMotivation = playerVector[j]->GetMotivation();
+            currentSuccess = playerVector[j]->GetSuccess();
             cout << playerName << "'s motivation is " << currentMotivation << " and success is " << currentSuccess << endl << endl;
         }
     }
@@ -371,7 +387,8 @@ void CDegrees::Gameplay() {
  *
  * @return Random integer between 1 and 10
  */
-int CDegrees::Random() {
+int CDegrees::Random() 
+{
     return static_cast<int>(static_cast<double>(rand()) / (RAND_MAX + 1) * 10.0f + 1);
 }
 
@@ -385,6 +402,7 @@ int CDegrees::Random() {
  *
  * @return Random integer between 1 and 10
  */
-int CDegrees::Spin() {
+int CDegrees::Spin() 
+{
     return Random();
 }

@@ -8,19 +8,19 @@ using namespace std;
 class CSpace
 {
 protected:
-    int mType;
-    string mName;
+    int mType = 0;
+    string mName = "";
 
 public:
-    CSpace(int, const string);
-    virtual ~CSpace() = default; // Virtual destructor
-    void setType(int);
-    void setName(const string);
-    virtual int getType() const;
-    virtual string getName() const;
-    virtual void outputMessage(CPlayer*);
-    virtual void perform(CPlayer*);
+    CSpace( int type,    const string );
+    ~CSpace() = default; // Virtual destructor
+    void SetType( int );
+    void SetName( const string );
+    virtual int GetType() const;
+    virtual string GetName() const;
+    virtual void GetOutputMessage( CPlayer* player );
+    virtual void PerformTask( CPlayer* player );
 };
 
 // Define an alias for the shared pointer of type CSpace. All spaces will be creted using this shared pointer
-using CSpacePtr = shared_ptr<CSpace>;
+using pCSpacePtr = shared_ptr<CSpace>;

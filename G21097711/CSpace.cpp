@@ -12,8 +12,7 @@ using namespace std;
  *
  * @return None
  */
-CSpace::CSpace(int type, const string name) : mType(type), mName(name) {}   // Constructer initializes name and type the space
-
+CSpace::CSpace( int type, const string name ) : mType( type ), mName( name ) {} 
 
 /**
  * @brief Sets the type of the space.
@@ -24,7 +23,8 @@ CSpace::CSpace(int type, const string name) : mType(type), mName(name) {}   // C
  *
  * @return None
  */
-void CSpace::setType(int type) {
+void CSpace::SetType( int type ) 
+{
     mType = type;
 }
 
@@ -38,7 +38,8 @@ void CSpace::setType(int type) {
  *
  * @return None
  */
-void CSpace::setName(const string name) {
+void CSpace::SetName( const string name ) 
+{
     mName = name;
 }
 
@@ -51,7 +52,8 @@ void CSpace::setName(const string name) {
  *
  * @return The type of the space.
  */
-int CSpace::getType() const {
+int CSpace::GetType() const 
+{
     return mType;
 }
 
@@ -64,7 +66,8 @@ int CSpace::getType() const {
  *
  * @return The name of the space.
  */
-string CSpace::getName() const {
+string CSpace::GetName() const 
+{
     return mName;
 }
 
@@ -78,7 +81,7 @@ string CSpace::getName() const {
  *
  * @return None
  */
-void CSpace::outputMessage(CPlayer*) {}
+void CSpace::GetOutputMessage( CPlayer* ) {}
 
 /**
  * @brief Virtual function to be overridden by derived classes to perform changes to player's attributes when landing on this space.
@@ -90,6 +93,6 @@ void CSpace::outputMessage(CPlayer*) {}
  *
  * @return None
  */
-void CSpace::perform(CPlayer*) {}
+void CSpace::PerformTask( CPlayer* ) {}
 
 

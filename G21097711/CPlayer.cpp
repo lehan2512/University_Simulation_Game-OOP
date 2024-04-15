@@ -2,70 +2,79 @@
 
 using namespace std;
 
-CPlayer::CPlayer(string name) : mName(name), mMotivation(1000), mSuccess(0), mYear(1), mPosition(0), mYearOneTasks(0), mYearTwoTasks(0), mYearThreeTasks(0) {}
+CPlayer::CPlayer( string name ) : mName( name ), mMotivation( 1000 ), mSuccess( 0 ), mYear( 1 ), mPosition( 0 ), mYearOneTasks( 0 ), mYearTwoTasks( 0 ), mYearThreeTasks( 0 ) {}
 
-void CPlayer::setMotivation(int motivation) {
+void CPlayer::SetMotivation( int motivation ) 
+{
     mMotivation = motivation;
 }
 
-void CPlayer::setSuccess(unsigned int success) {
+void CPlayer::SetSuccess( unsigned int success ) 
+{
     mSuccess = success;
 }
 
-void CPlayer::setYear(int year) {
+void CPlayer::SetYear( int year ) 
+{
     mYear = year;
 }
 
-void CPlayer::setPosition(int position) {
+void CPlayer::SetPosition( int position )
+{
     mPosition = position;
 }
 
-string CPlayer::getName() {
+string CPlayer::GetName() 
+{
     return mName;
 }
 
-int CPlayer::getMotivation() {
+int CPlayer::GetMotivation() 
+{
     return mMotivation;
 }
 
-int CPlayer::getSuccess() {
+int CPlayer::GetSuccess() 
+{
     return mSuccess;
 }
 
-int CPlayer::getYear() {
+int CPlayer::GetYear() 
+{
     return mYear;
 }
 
-int CPlayer::getPosition() {
+int CPlayer::GetPosition() 
+{
     return mPosition;
 }
 
-void CPlayer::setYearOneTasks(int addTask)
+void CPlayer::SetYearOneTasksCompleted( int addTask )
 {
     mYearOneTasks = addTask;
 }
 
-void CPlayer::setYearTwoTasks(int addTask)
+void CPlayer::SetYearTwoTasksCompleted( int addTask )
 {
     mYearTwoTasks = addTask;
 }
 
-void CPlayer::setYearThreeTasks(int addTask)
+void CPlayer::SetYearThreeTasksCompleted( int addTask )
 {
     mYearThreeTasks = addTask;
 }
 
-int CPlayer::getYearOneTasks()
+int CPlayer::GetYearOneTasksCompleted()
 {
     return mYearOneTasks;
 }
 
-int CPlayer::getYearTwoTasks()
+int CPlayer::GetYearTwoTasksCompleted()
 {
     return mYearTwoTasks;
 }
 
-int CPlayer::getYearThreeTasks()
+int CPlayer::GetYearThreeTasksCompleted()
 {
     return mYearThreeTasks;
 }

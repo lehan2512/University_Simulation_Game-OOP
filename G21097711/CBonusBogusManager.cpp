@@ -11,8 +11,8 @@
  *
  * @return None
  */
-CBonusBogusManager::CBonusBogusManager(int type, const string& name) 
-	: CSpace(type, name) {}
+CBonusBogusManager::CBonusBogusManager( int type, const string& name ) 
+	: CSpace( type, name ) {}
 
 /**
  * @brief Virtual function to perform an action associated with the Bonus/Bogus manager space.
@@ -25,7 +25,7 @@ CBonusBogusManager::CBonusBogusManager(int type, const string& name)
  *
  * @return None
  */
-void CBonusBogusManager::perform(CPlayer* player, int spin) {}
+void CBonusBogusManager::PerformTask( CPlayer* player, int spin ) {}
 
 /**
  * @brief Virtual function to output a message associated with the Bonus/Bogus manager space.
@@ -39,6 +39,6 @@ void CBonusBogusManager::perform(CPlayer* player, int spin) {}
  *
  * @return None
  */
-void CBonusBogusManager::outputMessage(CPlayer* player, const string& message) {}
+void CBonusBogusManager::GetOutputMessage( CPlayer* player, const string& message ) {}
 
 

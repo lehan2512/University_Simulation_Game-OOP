@@ -11,8 +11,8 @@
  * @param name The name of the space.
  * @param motivationalCost The motivational cost associated with landing on this space.
  */
-CAccusedOfPlagiarism::CAccusedOfPlagiarism(int type, const string& name, int motivationalCost) 
-	: CSpace(type, name), mMotivationalCost(motivationalCost) {}
+CAccusedOfPlagiarism::CAccusedOfPlagiarism( int type, const string& name, int motivationalCost ) 
+	: CSpace( type, name ), mMotivationalCost( motivationalCost ) {}
 
 
 /**
@@ -25,10 +25,10 @@ CAccusedOfPlagiarism::CAccusedOfPlagiarism(int type, const string& name, int mot
  *
  * @return None
  */
-void CAccusedOfPlagiarism::outputMessage(CPlayer* player)
+void CAccusedOfPlagiarism::GetOutputMessage( CPlayer* player )
 {
-	cout << player->getName() << " lands on Accused of Plagiarism and goes to hearing" << endl;
-	cout << player->getName() << " loses motivation" << endl;
+	cout << player->GetName() << " lands on Accused of Plagiarism and goes to hearing" << endl;
+	cout << player->GetName() << " loses motivation" << endl;
 }
 
 /**
@@ -40,11 +40,11 @@ void CAccusedOfPlagiarism::outputMessage(CPlayer* player)
  *
  * @return None
  */
-void CAccusedOfPlagiarism::perform(CPlayer* player)
+void CAccusedOfPlagiarism::PerformTask( CPlayer* player )
 {
 	const int positionOfPlagiarismHearing = 32;
 	// Set player position to Plagerism Hearing and reduction motivation
-	player->setPosition(positionOfPlagiarismHearing);
-	player->setMotivation(player->getMotivation() - mMotivationalCost);
-	outputMessage(player);
+	player->SetPosition( positionOfPlagiarismHearing );
+	player->SetMotivation( player->GetMotivation() - mMotivationalCost );
+	GetOutputMessage( player );
 }

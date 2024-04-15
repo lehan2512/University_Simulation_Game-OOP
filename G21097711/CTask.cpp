@@ -15,8 +15,8 @@
  *
  * @return None
  */
-CTask::CTask(int type, const string& name, int motivationalCost, int successAchieved)
-	: CSpace(type, name), mMotivationalCost(motivationalCost), mSuccessAchieved(successAchieved), vyvyanCompleted(false), rickCompleted(false), mReceivedHelp(false) {}
+CTask::CTask( int type, const string& name, int motivationalCost, int successAchieved )
+	: CSpace( type, name ), mMotivationalCost( motivationalCost ), mSuccessAchieved( successAchieved ), mVyvyanCompletedThisTask( false ), mRickCompletedThisTask( false ), mReceivedHelp( false ) {}
 
 /**
  * @brief Sets whether the player received help for the task.
@@ -27,7 +27,7 @@ CTask::CTask(int type, const string& name, int motivationalCost, int successAchi
  *
  * @return None
  */
-void CTask::setReceivedHelp(bool isFalse)
+void CTask::SetReceivedHelp( bool isFalse )
 {
     mReceivedHelp = isFalse;
 }
@@ -41,7 +41,8 @@ void CTask::setReceivedHelp(bool isFalse)
  *
  * @return The motivational cost associated with the task.
  */
-int CTask::getMotivationalCost() {
+int CTask::GetMotivationalCost() 
+{
     return mMotivationalCost;
 }
 
@@ -54,7 +55,8 @@ int CTask::getMotivationalCost() {
  *
  * @return The success achieved upon completing the task.
  */
-int CTask::getSuccessAchieved() {
+int CTask::GetSuccessAchieved()
+{
     return mSuccessAchieved;
 }
 
@@ -67,7 +69,7 @@ int CTask::getSuccessAchieved() {
  *
  * @return True if the player received help, false otherwise.
  */
-bool CTask::getReceivedHelp()
+bool CTask::GetReceivedHelp()
 {
     return mReceivedHelp;
 }
@@ -81,9 +83,9 @@ bool CTask::getReceivedHelp()
   *
   * @return None
   */
-void CTask::outputMessage(CPlayer* player)
+void CTask::GetOutputMessage( CPlayer* player )
 {
-    cout << player->getName() << " lands on " << mName << endl;
+    cout << player->GetName() << " lands on " << mName << endl;
 }
 
 
@@ -97,82 +99,85 @@ void CTask::outputMessage(CPlayer* player)
   *
   * @return None
   */
-void CTask::perform(CPlayer* player) {
+void CTask::PerformTask( CPlayer* player ) 
+{
     int playerIndex = -1; // Index of the player who landed on the assessment
 
     // Determine the player's index (0 for Vyvyan, 1 for Rick) to keep track of which player is currently on the space
-    if (player->getName() == "Vyvyan") {
+    if ( player->GetName() == "Vyvyan" )
+    {
         playerIndex = 0;
     }
-    else if (player->getName() == "Rick") {
+    else if ( player->GetName() == "Rick" ) 
+    {
         playerIndex = 1;
     }
 
     // If assessment has not been completed by anyone
-    if (!vyvyanCompleted && !rickCompleted)
+    if ( !mVyvyanCompletedThisTask && !mRickCompletedThisTask )
     {
-        if (player->getMotivation() > mMotivationalCost) //Checking if player has enough motivation to do task
+        if ( player->GetMotivation() > mMotivationalCost ) //Checking if player has enough motivation to do task
         {
-            outputMessage(player);
+            GetOutputMessage( player );
 
             // Changes to player attributes
-            player->setMotivation(player->getMotivation() - mMotivationalCost);
-            player->setSuccess(player->getSuccess() + mSuccessAchieved);
+            player->SetMotivation( player->GetMotivation() - mMotivationalCost );
+            player->SetSuccess( player->GetSuccess() + mSuccessAchieved );
 
             // Mark the assessment as completed by the player
             if (playerIndex == 0)
             {
-                vyvyanCompleted = true;
+                mVyvyanCompletedThisTask = true;
             }
             else
             {
-                rickCompleted = true;
+                mRickCompletedThisTask = true;
             }
-            playerOutput(player);
+            GetPlayerOutput( player );
             
 
-            //reduce the motivational cost and success achieved from the task so that when another player comes to this task, they receive half and helper receives half
+            //reduce the motivational cost, success achieved from the task because other players cannot receive full score
             mMotivationalCost = mMotivationalCost / 2;
             mSuccessAchieved = mSuccessAchieved / 2;
-            mWhoCompleted.push_back(player);
+            mWhoCompleted.push_back( player );
         }
         else
         {
-            cout << player->getName() << " doesn't have the " << mMotivationalCost << " motivation to complete the " << mName << endl;
+            cout << player->GetName() << " doesn't have the " << mMotivationalCost << " motivation to complete the " << mName << endl;
         }
         
     }
     //If assessment has not been completed by the player who landed on it but completed by another player
-    else if ((playerIndex == 0 && !vyvyanCompleted) || (playerIndex == 1 && !rickCompleted))
+    else if ( ( playerIndex == 0 && !mVyvyanCompletedThisTask ) || ( playerIndex == 1 && !mRickCompletedThisTask ) )
     {
-        if (player->getMotivation() > mMotivationalCost)    // Checking if player has enough motivation to perform task
+        if ( player->GetMotivation() > mMotivationalCost )    // Checking if player has enough motivation to perform task
         {
-            outputMessage(player);
+            GetOutputMessage( player );
 
-            //Note that motivationalCost and successAchieved are now half of actual value since one player has already completed task
-            int landedPlayerMotivation = player->getMotivation();
-            player->setMotivation(landedPlayerMotivation - mMotivationalCost);
-            player->setSuccess(player->getSuccess() + mSuccessAchieved);
+            // MotivationalCost and successAchieved are now halfed already
+            int landedPlayerMotivation = player->GetMotivation();
+            player->SetMotivation( landedPlayerMotivation - mMotivationalCost );
+            player->SetSuccess( player->GetSuccess() + mSuccessAchieved );
 
-            if (playerIndex == 0)
+            if ( playerIndex == 0 )
             {
-                vyvyanCompleted = true;
+                mVyvyanCompletedThisTask = true;
             }
             else
             {
-                rickCompleted = true;
+                mRickCompletedThisTask = true;
             }
             mReceivedHelp = true;
 
-            playerOutput(player);
+            GetPlayerOutput( player );
 
             //Friend's attributes are affected as he helped
-            affectFriendForHelping(player);
+            AffectFriendForHelping( player );
         }
     }
     else
     {
-        outputMessage(player);  // If player has already completed the task or does not have enough motivation to do the task, simply outputs space landed on
+        GetOutputMessage( player );  // Outputs space landed on if player has already completed task
     }
 }
 
@@ -186,7 +191,7 @@ void CTask::perform(CPlayer* player) {
  *
  * @return None
  */
-void CTask::playerOutput(CPlayer* player) {} // As mentioned in header file this function is to be overrridden in derived classes
+void CTask::GetPlayerOutput( CPlayer* player ) {}
 
 /**
  * @brief Performs changes to the friend's attributes for helping.
@@ -198,5 +203,5 @@ void CTask::playerOutput(CPlayer* player) {} // As mentioned in header file this
  *
  * @return None
  */
-void CTask::affectFriendForHelping(CPlayer*) {} // As mentioned in header file this function is to be overrridden in derived classes
+void CTask::AffectFriendForHelping( CPlayer* ) {}
 

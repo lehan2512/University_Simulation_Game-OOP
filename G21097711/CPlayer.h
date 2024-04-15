@@ -6,33 +6,33 @@
 class CPlayer
 {
 private:
-    std::string mName;
-    int mMotivation;
-    int mSuccess;
-    int mYear;
-    int mPosition;
-    int mYearOneTasks;
-    int mYearTwoTasks;
-    int mYearThreeTasks;
+    std::string mName = "";
+    int mMotivation = 1000;
+    int mSuccess = 0;
+    int mYear = 0;
+    int mPosition = 0;
+    int mYearOneTasks = 0;
+    int mYearTwoTasks = 0;
+    int mYearThreeTasks = 0;
 
 public:
-    CPlayer(std::string name);
-    void setMotivation(int motivation);
-    void setSuccess(unsigned int success);
-    void setYear(int year);
-    void setPosition(int position);
-    std::string getName();
-    int getMotivation();
-    int getSuccess();
-    int getYear();
-    int getPosition();
-    void setYearOneTasks(int addTask);
-    void setYearTwoTasks(int addTask);
-    void setYearThreeTasks(int addTask);
-    int getYearOneTasks();
-    int getYearTwoTasks();
-    int getYearThreeTasks();
+    CPlayer( std::string name );
+    void SetMotivation( int motivation );
+    void SetSuccess( unsigned int success );
+    void SetYear( int year );
+    void SetPosition( int position );
+    std::string GetName();
+    int GetMotivation();
+    int GetSuccess();
+    int GetYear();
+    int GetPosition();
+    void SetYearOneTasksCompleted( int addTask );
+    void SetYearTwoTasksCompleted( int addTask );
+    void SetYearThreeTasksCompleted( int addTask );
+    int GetYearOneTasksCompleted();
+    int GetYearTwoTasksCompleted();
+    int GetYearThreeTasksCompleted();
 };
 
 // Defined an alias for the shared pointer
-using CPlayerPtr = std::shared_ptr<CPlayer>;
+using pCPlayerPtr = std::shared_ptr<CPlayer>;

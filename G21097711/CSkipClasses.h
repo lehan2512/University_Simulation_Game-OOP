@@ -4,8 +4,8 @@ class CSkipClasses :
     public CSpace
 {
 public:
-    CSkipClasses(int type, const string& name);
-    void outputMessage(CPlayer*) override;
-    void perform(CPlayer*) override;
+    CSkipClasses( int type, const string& name );
+    void GetOutputMessage( CPlayer* player ) override;
+    void PerformTask( CPlayer* player ) override;
 };
 

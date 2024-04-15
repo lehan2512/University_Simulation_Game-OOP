@@ -16,8 +16,8 @@
  *
  * @return None
  */
-CAssessment::CAssessment(int type, const string& name, int motivationalCost, int successAchieved, int year)
-    : CTask (type, name, motivationalCost, successAchieved), mYear(year) {}
+CAssessment::CAssessment( int type, const string& name, int motivationalCost, int successAchieved, int year )
+    : CTask ( type, name, motivationalCost, successAchieved ), mYear( year ) {}
 
 /**
  * @brief Gets the year associated with the assessment.
@@ -28,7 +28,8 @@ CAssessment::CAssessment(int type, const string& name, int motivationalCost, int
  *
  * @return The year associated with the assessment.
  */
-int CAssessment::getYear() {
+int CAssessment::GetYear() 
+{
     return mYear;
 }
 
@@ -43,21 +44,21 @@ int CAssessment::getYear() {
  *
  * @return None
  */
-void CAssessment::playerOutput(CPlayer* player)
+void CAssessment::GetPlayerOutput( CPlayer* player )
 {
-    cout << player->getName() << " completes  " << mName << " for " << getMotivationalCost() << " and achieves " << getSuccessAchieved() << endl;
+    cout << player-> GetName() << " completes  " << mName << " for " << GetMotivationalCost() << " and achieves " << GetSuccessAchieved() << endl;
 
-    if (getYear() == 1)
+    if ( GetYear() == 1 )
     {
-        player->setYearOneTasks(player->getYearOneTasks() + 1);
+        player->SetYearOneTasksCompleted(player->GetYearOneTasksCompleted() + 1);
     }
-    else if (getYear() == 2)
+    else if ( GetYear() == 2 )
     {
-        player->setYearTwoTasks(player->getYearTwoTasks() + 1);
+        player->SetYearTwoTasksCompleted( player->GetYearTwoTasksCompleted() + 1 );
     }
     else
     {
-        player->setYearThreeTasks(player->getYearThreeTasks() + 1);
+        player->SetYearThreeTasksCompleted( player->GetYearThreeTasksCompleted() + 1 );
     }
 }
 
@@ -70,10 +71,10 @@ void CAssessment::playerOutput(CPlayer* player)
  *
  * @return None
  */
-void CAssessment::affectFriendForHelping(CPlayer* player)
+void CAssessment::AffectFriendForHelping( CPlayer* player )
 {
     // Friend receiving success for helping
-    mWhoCompleted[0]->setSuccess(mWhoCompleted[0]->getSuccess() + getSuccessAchieved());
-    cout << mWhoCompleted[0]->getName() << " helps and achieves " << getSuccessAchieved() << endl;
+    mWhoCompleted[0]->SetSuccess(mWhoCompleted[0]->GetSuccess() + GetSuccessAchieved());
+    cout << mWhoCompleted[0]->GetName() << " helps and achieves " << GetSuccessAchieved() << endl;
 }
 

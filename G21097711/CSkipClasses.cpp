@@ -10,7 +10,7 @@
  * @param type The type of the space.
  * @param name The name of the space.
  */
-CSkipClasses::CSkipClasses(int type, const string& name) : CSpace(type, name) {}
+CSkipClasses::CSkipClasses( int type, const string& name ) : CSpace( type, name ) {}
 
 /**
  * @brief Overriden function that Output a message when a player lands on the Skip Classes space.
@@ -22,9 +22,9 @@ CSkipClasses::CSkipClasses(int type, const string& name) : CSpace(type, name) {}
  *
  * @return None
  */
-void CSkipClasses::outputMessage(CPlayer* player)
+void CSkipClasses::GetOutputMessage( CPlayer* player )
 {
-	cout << player->getName() << " lands on Skip Classes and hangs out with their dodgy mates" << endl;
+	cout << player->GetName() << " lands on Skip Classes and hangs out with their dodgy mates" << endl;
 }
 
 /**
@@ -36,7 +36,7 @@ void CSkipClasses::outputMessage(CPlayer* player)
  *
  * @return None
  */
-void CSkipClasses::perform(CPlayer* player)
+void CSkipClasses::PerformTask( CPlayer* player )
 {
-	outputMessage(player);
+	GetOutputMessage( player );
 }

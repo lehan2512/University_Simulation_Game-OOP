@@ -6,11 +6,11 @@ class CAssessment :
     public CTask
 {
 private:
-    int mYear;
+    int mYear = 0;
 
-public:
-    CAssessment(int type, const string& name, int motivationalCost, int successAchieved, int year); // overloading is done implicitly
-    int getYear();
-    void playerOutput(CPlayer* player) override;
-    void affectFriendForHelping(CPlayer* player) override;
+public:  // Overloading is done implicitly
+    CAssessment( int type, const string& name, int motivationalCost, int successAchieved, int year );
+    int GetYear();
+    void GetPlayerOutput(CPlayer* player) override;
+    void AffectFriendForHelping(CPlayer* player) override;
 };

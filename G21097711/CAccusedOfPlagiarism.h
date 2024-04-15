@@ -8,8 +8,8 @@ class CAccusedOfPlagiarism :
 private:
     int mMotivationalCost;
 public:
-    CAccusedOfPlagiarism(int type, const string& name, int motivationalCost);
-    void outputMessage(CPlayer*) override;
-    void perform(CPlayer*) override;
+    CAccusedOfPlagiarism( int type, const string& name, int motivationalCost );
+    void GetOutputMessage( CPlayer* player ) override;
+    void PerformTask( CPlayer* player ) override;
 };
 

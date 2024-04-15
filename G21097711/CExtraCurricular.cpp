@@ -15,8 +15,8 @@
  *
  * @return None
  */
-CExtraCurricular::CExtraCurricular(int type, const string& name, int motivationalCost, int successAchieved)
-    : CTask(type, name, motivationalCost, successAchieved) {}
+CExtraCurricular::CExtraCurricular( int type, const string& name, int motivationalCost, int successAchieved )
+    : CTask( type, name, motivationalCost, successAchieved ) {}
 
 /**
  * @brief Overrides player output when completing an extra-curricular activity.
@@ -28,9 +28,9 @@ CExtraCurricular::CExtraCurricular(int type, const string& name, int motivationa
  *
  * @return None
  */
-void CExtraCurricular::playerOutput(CPlayer* player)
+void CExtraCurricular::GetPlayerOutput( CPlayer* player )
 {
-    cout << player->getName() << " undertakes " << getName() << " for " << getMotivationalCost() << " and achieves " << getSuccessAchieved() << endl;
+    cout << player->GetName() << " undertakes " << GetName() << " for " << GetMotivationalCost() << " and achieves " << GetSuccessAchieved() << endl;
 }
 
 
@@ -43,10 +43,10 @@ void CExtraCurricular::playerOutput(CPlayer* player)
  *
  * @return None
  */
-void CExtraCurricular::affectFriendForHelping(CPlayer* player)
+void CExtraCurricular::AffectFriendForHelping( CPlayer* player )
 {
     // Friend receiving success for helping
-    mWhoCompleted[0]->setMotivation(mWhoCompleted[0]->getMotivation() - getMotivationalCost());
-    mWhoCompleted[0]->setSuccess(mWhoCompleted[0]->getSuccess() + getSuccessAchieved());
-    cout << mWhoCompleted[0]->getName() << " motivates " << player->getName() << " by joining their activity" << endl;
+    mWhoCompleted[0]->SetMotivation( mWhoCompleted[0]->GetMotivation() - GetMotivationalCost() );
+    mWhoCompleted[0]->SetSuccess( mWhoCompleted[0]->GetSuccess() + GetSuccessAchieved() );
+    cout << mWhoCompleted[0]->GetName() << " motivates " << player->GetName() << " by joining their activity" << endl;
 }

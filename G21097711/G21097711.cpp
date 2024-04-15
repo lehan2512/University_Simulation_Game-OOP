@@ -7,7 +7,7 @@ int main()
 {
     CDegrees degreesGame; // Creating an instance of CDegrees class
     degreesGame.PlayGame(); // Calling playGame function to start the game
-    
-    return 0;
     _CrtDumpMemoryLeaks();  // Detecting memory leaks if any
+
+    return 0;
 }
